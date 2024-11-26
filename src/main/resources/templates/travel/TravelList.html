@@ -21,37 +21,42 @@
         </div>
         <div class="justify-content-center mb-3 pb-3">
             <div style="width: 100%; height: 50px;">
-                <span>제목 : </span>
-                <input type="text" id="search_title">
-                <input type="button" style="float:right;" class="btn btn-primary mb-2" value="검색" onclick="searchBtn()"/>
+                <span>지역 : </span>
+                <select class="btn btn-primary mb-2" style="width:100px;" id="areaCode">
+                    <option value="">전체</option>
+                    <option value="1">서울</option>
+                    <option value="6">부산</option>
+                    <option value="4">대구</option>
+                    <option value="2">인천</option>
+                    <option value="5">광주</option>
+                    <option value="3">대전</option>
+                    <option value="7">울산</option>
+                    <option value="8">세종</option>
+                    <option value="31">경기</option>
+                    <option value="32">강원</option>
+                    <option value="33">충북</option>
+                    <option value="34">충남</option>
+                    <option value="35">경북</option>
+                    <option value="36">경남</option>
+                    <option value="37">전북</option>
+                    <option value="38">전남</option>
+                    <option value="39">제주</option>
+                </select>
+                <input type="button" style="float:right;" class="btn btn-primary mb-2" value="검색" onclick="apiTest()"/>
             </div>
-        </div>
-        <div>
-            <a href="/board/BoardRegister" class="btn btn-primary mb-2">게시글 작성</a>
-            <button type="button" class="btn btn-primary mb-2" onclick="deleteBtn()" style="float:right;">게시글 삭제</button>
         </div>
         <div class="bd-example-snippet bd-code-snippet">
             <div class="bd-example">
                 <table class="table table-hover table-bordered">
                     <thead>
                     <tr>
-                        <th scope="col" style="width: 30px;">
-                            <input type="checkbox" id="selectAll" onclick="checkBoxAll(this)">
-                        </th>
-                        <th scope="col" style="width: 90px;">제목</th>
-                        <th scope="col" style="width: 90px;">날짜정보</th>
-                        <th scope="col" style="width: 90px;">조회수</th>
+                        <th scope="col" style="width: 90px;">주소</th>
+                        <th scope="col" style="width: 90px;">이미지</th>
+                        <th scope="col" style="width: 90px;">장소</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="board : ${BoardList}">
-                        <td>
-                            <input type="checkbox" class="row-checkbox" th:value="${board.boardSeq}">
-                        </td>
-                        <td style="text-decoration-line: underline; cursor:pointer;" th:text="${board.boardTitle}" th:onclick="'detailBtn(' + ${board.boardSeq} + ')'"></td>
-                        <td th:text="${board.boardCreateDt}"></td>
-                        <td th:text="${board.boardCnt}"></td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -60,3 +65,58 @@
 </div>
 </body>
 </html>
+
+<script>
+
+    function apiTest(){
+        var params = {
+            areaCode : $("#areaCode option:selected").val(),
+        };
+        console.log(params);
+        $.ajax({
+            url: '/travel/api/travel-api1',
+            type: 'get',
+            data: params,
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function(data) {
+                var list = data.response.body.items.item;
+                renderTable(list);
+            },
+            error: function(err) {
+                console.log(err);
+            },
+        });
+    }
+
+    function renderTable(list) {
+        var tbody = $("table tbody"); // <tbody> 요소 선택
+        tbody.empty(); // 기존 내용을 비우기
+
+        list.forEach(function(item) {
+            var imageSrc = item.firstimage ? item.firstimage : '';
+            var row = `
+            <tr>
+                <td style="text-decoration-line: underline; cursor:pointer;" onclick="detailBtn('${item.contentid}', '${item.contenttypeid}')">${item.addr1}</td>
+                <td>${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 50px; height: 50px;">` : ''}</td>
+                <td>${item.title}</td>
+            </tr>
+        `;
+            tbody.append(row);
+        });
+    }
+
+    function detailBtn(contentId, contentTypeId){
+        console.log('2')
+        console.log(contentId)
+        console.log(contentTypeId)
+        var params = {
+            contentId: contentId,
+            contentTypeId: contentTypeId,
+        };
+        CommonUtil.openPopup('/travel/api/travelDetail', params, '여행지 상세 정보', 1400, 600, '');
+
+    }
+
+</script>
+<script type="text/javascript" th:src="@{/js/commonUtil/commonUtil.js}"></script>

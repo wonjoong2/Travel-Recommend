@@ -1,6 +1,9 @@
 package com.example.board.controller;
 
+import com.example.board.DTO.Board;
+import com.example.board.DTO.Travel;
 import com.example.board.Manager.OpenApiManager;
+import com.example.board.service.TravelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -10,12 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ import java.util.Map;
 public class TravelController {
 
     private final OpenApiManager openApiManager;
-    //private final TravelService travelService;
+    private final TravelService travelService;
 
     /*
     *
@@ -33,15 +35,29 @@ public class TravelController {
     * */
     @RequestMapping("/TravelList")
     public String TravelList(Model model) {
-//        List<Board> boardList = boardService.BoardList();
-//        model.addAttribute("BoardList", boardList);
 
         return "/travel/TravelList";
     }
 
-    @GetMapping("/travel-api")
-    public ResponseEntity<?> fetch() throws UnsupportedEncodingException {
-        return ResponseEntity.ok(openApiManager.fetch().getBody());
+    @GetMapping("/api/travel-api1")
+    public ResponseEntity<?> fetch1(@RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
+        String areaCode = (String) params.get("areaCode");
+        return ResponseEntity.ok(openApiManager.fetch1(areaCode).getBody());
+    }
+
+    @PostMapping(value = "/api/travelDetail")
+    public String travelDetail(@RequestParam Map<String, Object> params , Board vo, Model model) {
+        System.out.println("=============params");
+        System.out.println(params);
+        model.addAttribute("TravelDetail", params);
+        return "/travel/TravelDetail";
+    }
+
+    @GetMapping("/api/travel-api2")
+    public ResponseEntity<?> fetch2(@RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
+        String contentId = (String) params.get("contentId");
+        String contentTypeId = (String) params.get("contentTypeId");
+        return ResponseEntity.ok(openApiManager.fetch2(contentId,contentTypeId).getBody());
     }
 
 }
