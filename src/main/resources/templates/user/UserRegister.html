@@ -39,7 +39,8 @@
             userPhone: $('#user_phone').val(),
             userPostcode: $('#user_postcode').val(),
             userMail : $('#user_email').val(),
-            userAddress: $('#user_address').val() + $('#user_address_detail').val(),
+            userAddress1: $('#user_address1').val(),
+            userAddress2: $('#user_address2').val(),
         };
 
         // return false
@@ -86,8 +87,8 @@
                 }
 
                 document.getElementById('user_postcode').value = data.zonecode;
-                document.getElementById('user_address').value = fullAddr;
-                document.getElementById('user_address_detail').focus();
+                document.getElementById('user_address1').value = fullAddr;
+                document.getElementById('user_address2').focus();
             }
         }).open();
     }
@@ -136,7 +137,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="user_id">ID</label>
+                    <label for="user_id">아이디</label>
                     <button type="button" class="btn btn-primary btn-sm" onclick="dupCheckBtn()">중복확인</button>
                     <input type="text" class="form-control" id="user_id" name="user_id" required>
                 </div>
@@ -168,8 +169,8 @@
                     <label for="user_addressBtn">주소</label>
                     <input type="button" class="btn btn-primary btn-sm" value="우편번호찾기" id="user_addressBtn" onclick="openMailPop()">
                     <input type="text" class="form-control" id="user_postcode" required>
-					<input type="text" class="form-control" id="user_address" required>
-                    <input type="text" class="form-control" id="user_address_detail" required>
+					<input type="text" class="form-control" id="user_address1" required>
+                    <input type="text" class="form-control" id="user_address2" required>
                 </div>
             </div>
 

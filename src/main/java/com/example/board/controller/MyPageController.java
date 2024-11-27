@@ -26,10 +26,7 @@ public class MyPageController {
         String userId = (String) session.getAttribute("userId");
         List<User> userDetail =  userService.userDetail(userId);
         System.out.println(userDetail);
-        System.out.println(userDetail);
-        System.out.println(userDetail);
-        System.out.println(userDetail);
-        model.addAttribute("userDetail", userDetail);
+        model.addAttribute("userDetail", userDetail.get(0));
 
         return "/mypage/myPagePop";
 

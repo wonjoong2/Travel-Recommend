@@ -30,24 +30,11 @@ public class User {
 	@Column(name = "user_email")
 	private String userEmail;
 
-	public String getUserAddress() {
-		return userAddress;
-	}
+	@Column(name = "user_address1")
+	private String userAddress1;
 
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
-	}
-
-	@Column(name = "user_address")
-	private String userAddress;
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+	@Column(name = "user_address2")
+	private String userAddress2;
 
 	@Column(name = "create_id")
 	private String createId;
@@ -60,6 +47,8 @@ public class User {
 
 	@Column(name = "update_dt")
 	private LocalDateTime updateDt;
+
+
 
 	// Getters and Setters
 	public int getUserSeq() {
@@ -110,6 +99,30 @@ public class User {
 		this.userPostcode = userPostcode;
 	}
 
+	public String getUserAddress1() {
+		return userAddress1;
+	}
+
+	public void setUserAddress1(String userAddress1) {
+		this.userAddress1 = userAddress1;
+	}
+
+	public String getUserAddress2() {
+		return userAddress2;
+	}
+
+	public void setUserAddress2(String userAddress2) {
+		this.userAddress2 = userAddress2;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
 	public String getCreateId() {
 		return createId;
 	}
@@ -144,14 +157,16 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "UserEntity{" +
+		return "User{" +
 				"userSeq=" + userSeq +
 				", userId='" + userId + '\'' +
 				", userPwd='" + userPwd + '\'' +
 				", userNm='" + userNm + '\'' +
 				", userPhone='" + userPhone + '\'' +
 				", userPostcode='" + userPostcode + '\'' +
-				", userMail='" + userEmail + '\'' +
+				", userEmail='" + userEmail + '\'' +
+				", userAddress1='" + userAddress1 + '\'' +
+				", userAddress2='" + userAddress2 + '\'' +
 				", createId='" + createId + '\'' +
 				", updateId='" + updateId + '\'' +
 				", createDt=" + createDt +

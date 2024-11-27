@@ -2,6 +2,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link href="/css/style.css" rel="stylesheet" type="text/css">
 <script>
+  //
   function saveBtn() {
     //Validtaion Check
     if ($('#user_id').val() == '') {
@@ -12,11 +13,11 @@
       alert('우편번호를 입력해주세요.');
       return false;
     }
-    if ($('#user_mail').val() == '') {
+    if ($('#user_address1').val() == '') {
       alert('주소를 입력해주세요.');
       return false;
     }
-    if ($('#user_mail_detail').val() == '') {
+    if ($('#user_address2').val() == '') {
       alert('상세주소를 입력해주세요.');
       return false;
     }
@@ -38,8 +39,9 @@
       userNm: $('#user_nm').val(),
       userPhone: $('#user_phone').val(),
       userPostcode: $('#user_postcode').val(),
-      userMail : $('#user_email').val(),
-      userAddress: $('#user_address').val() + $('#user_address_detail').val(),
+      userEmail : $('#user_email').val(),
+      userAddress1: $('#user_address1').val(),
+      userAddress2: $('#user_address2').val()
     };
 
     // return false
@@ -86,42 +88,10 @@
         }
 
         document.getElementById('user_postcode').value = data.zonecode;
-        document.getElementById('user_address').value = fullAddr;
-        document.getElementById('user_address_detail').focus();
+        document.getElementById('user_address1').value = fullAddr;
+        document.getElementById('user_address2').focus();
       }
     }).open();
-  }
-
-  var checkFlag = 0;
-
-  function dupCheckBtn() {
-    var params = {
-      userId: $('#user_id').val(),
-    };
-
-    $.ajax({
-      url: '/user/IdCheck',
-      type: 'post',
-      data: params,
-      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-      dataType: 'json', // 서버로부터 JSON 응답을 기대함
-      success: function (data) {
-        if (data > 0) {
-          alert('이미 존재하는 ID입니다.')
-          checkFlag = 0;
-          return false
-        } else {
-          alert('사용가능한 ID입니다.')
-          checkFlag = 1;
-        }
-      },
-      error: function (err) {
-        console.log(err);
-      },
-      complete: function (data) {
-
-      },
-    });
   }
 </script>
 
@@ -129,16 +99,14 @@
   <div class="container">
     <div class="justify-content-center mb-3 pb-3">
       <div class="heading-section text-center">
-        <h2>회원가입 페이지</h2>
-
+        <h2>마이페이지</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="user_id">ID</label>
-          <button type="button" class="btn btn-primary btn-sm" onclick="dupCheckBtn()">중복확인</button>
-          <input type="text" class="form-control" id="user_id" name="user_id" required>
+          <label for="user_id">아이디</label>
+          <input type="text" class="form-control" id="user_id" name="user_id"  th:value="${userDetail.userId}" readonly>
         </div>
       </div>
 
@@ -154,29 +122,29 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="user_nm">이름</label>
-          <input type="text" class="form-control" id="user_nm" name="user_nm" required>
+          <input type="text" class="form-control" id="user_nm" name="user_nm" th:value="${userDetail.userNm}" readonly>
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
           <label for="user_email">e-mail</label>
-          <input type="text" class="form-control" id="user_email" name="user_email" required>
+          <input type="text" class="form-control" id="user_email" name="user_email" th:value="${userDetail.userEmail}">
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
           <label for="user_addressBtn">주소</label>
           <input type="button" class="btn btn-primary btn-sm" value="우편번호찾기" id="user_addressBtn" onclick="openMailPop()">
-          <input type="text" class="form-control" id="user_postcode" required>
-          <input type="text" class="form-control" id="user_address" required>
-          <input type="text" class="form-control" id="user_address_detail" required>
+          <input type="text" class="form-control" id="user_postcode" th:value="${userDetail.userPostcode}">
+          <input type="text" class="form-control" id="user_address1" th:value="${userDetail.userAddress1}">
+          <input type="text" class="form-control" id="user_address2" th:value="${userDetail.userAddress2}">
         </div>
       </div>
 
       <div class="col-md-12">
         <div class="form-group">
           <label for="user_phone">휴대전화번호</label>
-          <input type="text" class="form-control" id="user_phone" name="user_phone" required>
+          <input type="text" class="form-control" id="user_phone" name="user_phone" th:value="${userDetail.userPhone}">
         </div>
       </div>
     </div>
@@ -187,8 +155,7 @@
             <a href="/" class="btn btn-secondary py-3 px-5 w-100">뒤로</a>
           </div>
           <div class="col-md-6">
-            <button type="button" class="btn btn-primary py-3 px-5 w-100"
-                    onclick="saveBtn()">회원가입
+            <button type="button" class="btn btn-primary py-3 px-5 w-100" onclick="saveBtn()">회원가입
             </button>
           </div>
         </div>

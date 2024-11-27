@@ -63,7 +63,8 @@ public class UserServiceImpl implements UserService {
         user.setUserPhone((String) params.get("userPhone"));
         user.setUserPostcode((String) params.get("userPostcode"));
         user.setUserEmail((String) params.get("userMail"));
-        user.setUserAddress((String) params.get("userAddress"));
+        user.setUserAddress1((String) params.get("userAddress1"));
+        user.setUserAddress2((String) params.get("userAddress2"));
         user.setCreateDt(LocalDateTime.now());
         user.setCreateId((String) params.get("userId"));
 
