@@ -1,5 +1,6 @@
 package com.example.board.Manager;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @Component
 public class OpenApiManager {
     private final String BASE_URL = "http://apis.data.go.kr/B551011/KorService1";
@@ -25,13 +26,15 @@ public class OpenApiManager {
     private final String serviceKey = "?ServiceKey=b2dGzeG6B3jL/B7DSWnpmASzrOYq7/X5t5eOQT01hikFxhxcfQJZTaWlRXAtRnBipog91ECkVA3tz/wOBrsbPA==";
     private final String defaultQueryParam = "&MobileOS=ETC&MobileApp=AppTest&_type=json";
     private final String numOfRows = "&numOfRows=10";
+    private final String pageNo = "&pageNo=";
 
-    private String makeUrl1(String areaCode) throws UnsupportedEncodingException {
+    private String makeUrl1(String areaCode,String pageNo) throws UnsupportedEncodingException {
         return BASE_URL +
                 apiUri1 +
                 serviceKey +
                 defaultQueryParam +
                 numOfRows +
+                "&pageNo=" + pageNo +
                 "&areaCode=" + areaCode;
     }
 
@@ -46,12 +49,11 @@ public class OpenApiManager {
 
     }
 
-    public ResponseEntity<?> fetch1(String areaCode) throws UnsupportedEncodingException {
-        System.out.println(makeUrl1(areaCode));
+    public ResponseEntity<?> fetch1(String areaCode,String pageNo) throws UnsupportedEncodingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<?> entity = new HttpEntity<>(new HttpHeaders());
-        ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl1(areaCode), HttpMethod.GET, entity, Map.class);
-        System.out.println(resultMap.getBody());
+        ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl1(areaCode,pageNo), HttpMethod.GET, entity, Map.class);
+        log.info("resultMap : " ,resultMap.getBody());
         return resultMap;
 
     }
@@ -60,7 +62,7 @@ public class OpenApiManager {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<?> entity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl2(contentId, contentTypeId), HttpMethod.GET, entity, Map.class);
-        System.out.println(resultMap.getBody());
+        log.info("resultMap : " ,resultMap.getBody());
         return resultMap;
 
     }

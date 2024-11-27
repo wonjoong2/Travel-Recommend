@@ -838,8 +838,6 @@ CommonUtil.fileAreaDataSet = function( _selector, _linkTable, _linkKey, _addUse,
 			fileDelList.push(list)	
 		}
 		
-		console.log("=========")
-		console.log(fileDelList)
 		for(var i = 0; i < fileList.length; i++){
 			if(fileList[i].lastModified == lastModified){
 				fileList.splice(i,1)

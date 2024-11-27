@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,6 +36,11 @@ public class UserServiceImpl implements UserService {
 
         User userUpdate = userRepository.save(user);
         return userUpdate.getUserSeq();
+    }
+
+    @Override
+    public List<User> userDetail(String userId) {
+        return userRepository.BoardDetail(userId);
     }
 
     @Override

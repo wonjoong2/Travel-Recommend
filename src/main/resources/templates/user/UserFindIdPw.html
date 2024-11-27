@@ -17,8 +17,6 @@
 			userEmail: $('#user_email').val(),
 		};
 
-		console.log(params);
-
 		$.ajax({
 			url: '/email/userAuthEmail',
 			type: 'post',
@@ -26,7 +24,6 @@
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			success: function (data) {
-				console.log(data);
 				authCode = data.authCode
 				alert(data.message);
 			},
@@ -72,8 +69,6 @@
 			userId: $('#user_id').val(),
 		};
 
-		console.log(params);
-
 		$.ajax({
 			url: '/email/mailPwFind',
 			type: 'post',
@@ -81,7 +76,6 @@
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			success: function (data) {
-				console.log(data);
 				if(data>0){
 					CommonUtil.openPopup('/email/mailPwFindPop', params, 'PW 변경', 600, 400, '');
 				}else{

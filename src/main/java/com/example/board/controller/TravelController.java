@@ -42,13 +42,12 @@ public class TravelController {
     @GetMapping("/api/travel-api1")
     public ResponseEntity<?> fetch1(@RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
         String areaCode = (String) params.get("areaCode");
-        return ResponseEntity.ok(openApiManager.fetch1(areaCode).getBody());
+        String pageNo = (String) params.get("pageNo");
+        return ResponseEntity.ok(openApiManager.fetch1(areaCode,pageNo).getBody());
     }
 
     @PostMapping(value = "/api/travelDetail")
     public String travelDetail(@RequestParam Map<String, Object> params , Board vo, Model model) {
-        System.out.println("=============params");
-        System.out.println(params);
         model.addAttribute("TravelDetail", params);
         return "/travel/TravelDetail";
     }

@@ -12,9 +12,6 @@
 <div class="ftco-section admin-list">
     <div class="container">
         <div class="justify-content-center mb-3 pb-3">
-            <div>
-                <button type="button" class="btn btn-primary mb-2" onclick="logoutBtn()">로그아웃</button>
-            </div>
             <div class="heading-section text-center">
                 <h2>게시판!게시판!게시판!</h2>
             </div>
@@ -65,7 +62,6 @@
 <script>
     function detailBtn(boardSeq) {
 
-        console.log(boardSeq);
         var params = {
             boardSeq: Number(boardSeq),
         };
@@ -76,32 +72,13 @@
         })
         //location.reload(); // 페이지 새로고침
     }
-
-    function logoutBtn(){
-        $.ajax({
-            url: '/user/logout',
-            type: 'get',
-            data: '',
-            //dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            success: function(data) {
-                location.href = /*[[@{/}]]*/ '/';
-            },
-            error: function(err) {
-                console.log(err);
-            },
-        });
-    }
-
     function refresh() {
         location.reload();
     }
     function searchBtn(){
-        console.log("1");
         var params = {
             searchTitle: $('#search_title').val(),
         };
-        console.log(params);
         $.ajax({
             url: '/board/selectBoardList',
             type: 'post',
@@ -144,8 +121,6 @@
             checkBoxArr.push(checkbox.value);
         });
 
-        console.log('12313132132')
-        console.log(checkBoxArr);
         const params = JSON.stringify({ boardSeqs: checkBoxArr });
         if(confirm('삭제하시겠습니까?')){
             $.ajax({
@@ -155,7 +130,6 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
                 success: function(data) {
-                    console.log(data)
                     alert('삭제 성공!');
                     refresh();
                 },
@@ -174,3 +148,4 @@
 </script>
 
 <script type="text/javascript" th:src="@{/js/commonUtil/commonUtil.js}"></script>
+<script type="text/javascript" th:src="@{/js/commonUtil/common.js}"></script>

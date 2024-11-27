@@ -5,17 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-<div class="menu" th:fragment="header">
-  <nav class="clearfix">
-    <ul class="clearfix">
-      <li><a href="http://www._____.com">Home</a></li> <!--""<-여기 부분에 URL 작성하면 됨-->
-      <li><a href="http://www._____.com/About">About</a></li>
-      <li><a href="http://www._____.com/Project">Project</a></li>
-      <li><a href="/travel/TravelList">Travel</a></li>
-      <li><a href="/board/BoardList">Board</a></li>
-    </ul>
-    <a id="pull" href="#"></a>
-  </nav>
+<div class="container" th:fragment="header">
+    <div class="justify-content-center mb-3 pb-3">
+      <nav class="clearfix">
+          <ul class="clearfix">
+              <li><a href="http://www._____.com">Home</a></li> <!--""<-여기 부분에 URL 작성하면 됨-->
+              <li><a href="http://www._____.com/About">About</a></li>
+              <li><a href="http://www._____.com/Project">Project</a></li>
+              <li><a href="/travel/TravelList">Travel</a></li>
+              <li><a href="/board/BoardList">Board</a></li>
+          </ul>
+      </nav>
+        <button type="button" class="btn btn-primary mb-2" style="float: right;margin-left:10px;" onclick="logoutBtn()">로그아웃</button>
+        <button type="button" class="btn btn-primary mb-2" style="float: right;" onclick="myPageBtn()">마이페이지</button>
+    </div>
 </div>
 </body>
 </html>
+

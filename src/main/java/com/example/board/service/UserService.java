@@ -1,5 +1,8 @@
 package com.example.board.service;
 
+import com.example.board.DTO.User;
+
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -9,4 +12,5 @@ public interface UserService {
     int loginIdCheck(Map<String, Object> params);
     String loginPwdCheck(Map<String, Object> params);
     int userUpdatePw(Map<String, Object> params);
+    List<User> userDetail(String userId);
 }

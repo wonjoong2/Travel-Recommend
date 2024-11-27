@@ -8,7 +8,6 @@
 </head>
 <script>
   $(document).ready(function() {
-    console.log("11")
     // 페이지 로드 시 saveDiv 숨기기
     $('#saveDiv').hide();
   });
@@ -16,7 +15,6 @@
     var params={
       boardSeq : $('#boardSeq').val(),
     }
-    console.log(params);
     $.ajax({
       url:'/board/BoardModifyCheck',
       type: 'post',
@@ -24,7 +22,6 @@
       dataType: 'json',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       success: function(data) {
-        console.log(data)
         if(data>0){
           $('#id').prop('readonly', false);
           $('#title').prop('readonly', false);
@@ -49,7 +46,6 @@
       boardTitle : $('#title').val(),
       boardContent : $('#content').val(),
     }
-    console.log(params);
     if (confirm('저장하시겠습니까?')) {
       $.ajax({
         url: '/board/UpdateBoard',
@@ -58,7 +54,6 @@
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         success: function (data) {
-          console.log(data)
           alert('수정완료');
           window.opener.refresh();
         },

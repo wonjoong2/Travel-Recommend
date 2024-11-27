@@ -42,7 +42,6 @@
             userAddress: $('#user_address').val() + $('#user_address_detail').val(),
         };
 
-        console.log(params);
         // return false
         if (confirm('저장하시겠습니까?')) {
             $.ajax({
@@ -52,8 +51,6 @@
                 dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (data) {
-                    console.log("22222222222")
-                    console.log(data);
                 },
                 error: function (err) {
                     console.log(err);
@@ -109,7 +106,6 @@
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: 'json', // 서버로부터 JSON 응답을 기대함
             success: function (data) {
-                console.log(data);
                 if (data > 0) {
                     alert('이미 존재하는 ID입니다.')
                     checkFlag = 0;
