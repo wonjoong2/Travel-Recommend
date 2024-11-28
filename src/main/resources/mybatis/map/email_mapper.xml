@@ -5,14 +5,14 @@
 	<select id="mailIdFind" resultType="String">
 		SELECT
 		    USER_ID
-		FROM CANCER_USER
+		FROM TRAVEL_USER
 		WHERE
 		    USER_EMAIL = #{userEmail}
 	</select>
 
 	<select id="mailPwFind" resultType="int">
 		SELECT COUNT(*)
-			FROM CANCER_USER
+			FROM TRAVEL_USER
 		WHERE
 		    USER_EMAIL = #{userEmail}
 		AND

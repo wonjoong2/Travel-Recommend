@@ -11,14 +11,14 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query(value = "SELECT COUNT(*) FROM CANCER_USER WHERE USER_ID = :userId", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM TRAVEL_USER WHERE USER_ID = :userId", nativeQuery = true)
     int IdCheck(@Param("userId") String userId);
     Optional<User> findByUserId(String userId);
-    @Query(value = "SELECT COUNT(*) FROM CANCER_USER WHERE USER_ID = :userId", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM TRAVEL_USER WHERE USER_ID = :userId", nativeQuery = true)
     int loginIdCheck(@Param("userId") String userId);
-    @Query(value = "SELECT USER_PWD FROM CANCER_USER WHERE USER_ID = :userId", nativeQuery = true)
+    @Query(value = "SELECT USER_PWD FROM TRAVEL_USER WHERE USER_ID = :userId", nativeQuery = true)
     String loginPwdCheck(@Param("userId") String userId);
 
-    @Query(value = "SELECT * FROM CANCER_USER WHERE USER_ID = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM TRAVEL_USER WHERE USER_ID = :userId", nativeQuery = true)
     List<User> BoardDetail(@Param("userId") String userId);
 }

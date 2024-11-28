@@ -13,4 +13,5 @@ public interface UserService {
     String loginPwdCheck(Map<String, Object> params);
     int userUpdatePw(Map<String, Object> params);
     List<User> userDetail(String userId);
+    int UpdateUser(Map<String, Object> params);
 }

@@ -21,10 +21,6 @@
       alert('상세주소를 입력해주세요.');
       return false;
     }
-    if (checkFlag == 0) {
-      alert('ID 중복확인을 해주세요.');
-      return false;
-    }
 
     var regExp = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,16}$/;
     var userPwd = $('#user_pwd').val();
@@ -34,9 +30,8 @@
     }
 
     var params = {
-      userId: $('#user_id').val(),
+      userSeq: $('#user_seq').val(),
       userPwd: $('#user_pwd').val(),
-      userNm: $('#user_nm').val(),
       userPhone: $('#user_phone').val(),
       userPostcode: $('#user_postcode').val(),
       userEmail : $('#user_email').val(),
@@ -44,10 +39,12 @@
       userAddress2: $('#user_address2').val()
     };
 
+    console.log(params)
+
     // return false
-    if (confirm('저장하시겠습니까?')) {
+    if (confirm('수정하시겠습니까?')) {
       $.ajax({
-        url: '/user/UserRegister',
+        url: '/user/UserUpdate',
         type: 'post',
         data: params,
         dataType: 'json',
@@ -92,6 +89,10 @@
         document.getElementById('user_address2').focus();
       }
     }).open();
+  }
+
+  function closeBtn(){
+    window.close();
   }
 </script>
 
@@ -152,10 +153,10 @@
       <div class="col-xl-6">
         <div class="row mt-2">
           <div class="col-md-6">
-            <a href="/" class="btn btn-secondary py-3 px-5 w-100">뒤로</a>
+            <a href="/" class="btn btn-secondary py-3 px-5 w-100" onclick="closeBtn()">닫기</a>
           </div>
           <div class="col-md-6">
-            <button type="button" class="btn btn-primary py-3 px-5 w-100" onclick="saveBtn()">회원가입
+            <button type="button" class="btn btn-primary py-3 px-5 w-100" onclick="saveBtn()">수정
             </button>
           </div>
         </div>
@@ -163,4 +164,4 @@
     </div>
   </div>
 </div>
-
+<input type="hidden" id="user_seq" th:value="${userDetail.userSeq}">

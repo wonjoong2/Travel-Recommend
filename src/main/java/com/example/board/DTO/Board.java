@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "cancer_board") // 데이터베이스 테이블 이름
+@Table(name = "travel_board") // 데이터베이스 테이블 이름
 public class Board {
 
 	@Id

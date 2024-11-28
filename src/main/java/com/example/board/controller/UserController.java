@@ -124,4 +124,16 @@ public class UserController {
         int result = userService.userUpdatePw(params);
         return result;
     }
+
+    @RequestMapping(value = "/user/UserUpdate", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public int UserUpdate(@RequestParam Map<String, Object> params) {
+        int result = 0;
+        String pwd = (String) params.get("userPwd");
+        String encryptedPwd = encryptSHA256(pwd);
+        params.put("userPwd", encryptedPwd);
+        result = userService.UpdateUser(params);
+
+        return result;
+    }
 }

@@ -44,6 +44,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int UpdateUser(Map<String, Object> params) {
+        Integer userSeq = Integer.parseInt((String) params.get("userSeq"));
+        User user = userRepository.findById(userSeq)
+                .orElseThrow(() -> new RuntimeException("Board not found with boardSeq: " + userSeq));
+
+        user.setUserPwd((String) params.get("userPwd"));
+        user.setUserPhone((String) params.get("userPhone"));
+        user.setUserPostcode((String) params.get("userPostcode"));
+        user.setUserEmail((String) params.get("userEmail"));
+        user.setUserAddress1((String) params.get("userAddress1"));
+        user.setUserAddress2((String) params.get("userAddress2"));
+
+        User updateUser = userRepository.save(user);
+        return updateUser.getUserSeq();
+    }
+
+    @Override
     public int loginIdCheck(Map<String, Object> params) {
         String userId = (String) params.get("userId");
         return userRepository.loginIdCheck(userId);
