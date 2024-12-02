@@ -32,6 +32,8 @@
 <div class="menu" th:insert="includes/header :: header"></div>
 <div class="ftco-section admin-list">
     <div class="container">
+        <div style="height: 10px;"></div>
+
         <div class="justify-content-center mb-3 pb-3">
             <div class="heading-section text-center">
                 <h2>여행 코스!여행 코스!여행 코스!</h2>
@@ -40,7 +42,7 @@
         <div class="justify-content-center mb-3 pb-3">
             <div style="width: 100%; height: 50px;">
                 <span>지역 : </span>
-                <select class="btn btn-primary mb-2" style="width:100px;" id="areaCode">
+                <select class="btn btn-primary mb-2" style="width:100px;" id="areaCode" onchange="sigunCode(this)">
                     <option value="">전체</option>
                     <option value="1">서울</option>
                     <option value="6">부산</option>
@@ -59,6 +61,10 @@
                     <option value="37">전북</option>
                     <option value="38">전남</option>
                     <option value="39">제주</option>
+                </select>
+                <span>시군구 : </span>
+                <select class="btn btn-primary mb-2" style="width:15ㅗ0px;" id="sigunCode">
+
                 </select>
                 <input type="button" style="float:right;" class="btn btn-primary mb-2" value="검색" onclick="apiTest()"/>
             </div>
@@ -91,6 +97,7 @@
     function apiTest(){
         var params = {
             areaCode : $("#areaCode option:selected").val(),
+            sigunCode : $("#sigunCode option:selected").val(),
             pageNo : "1",
         };
         $.ajax({
@@ -165,6 +172,7 @@
     function changePage(newPageNo) {
         var params = {
             areaCode: $("#areaCode option:selected").val(),
+            sigunCode : $("#sigunCode option:selected").val(),
             pageNo: newPageNo, // 새로운 페이지 번호
         };
 
@@ -197,6 +205,37 @@
         };
         CommonUtil.openPopup('/travel/api/travelDetail', params, '여행코스 상세', 800, 600, '');
 
+    }
+
+    function sigunCode(e){
+        var areaCode = e.value;
+        var params = {
+            areaCode : areaCode,
+        }
+        //시군구 코드 찾기
+        $.ajax({
+            url: '/travel/api/travel-api3',
+            type: 'get',
+            data: params,
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function(data) {
+                var result = data.response.body.items.item;
+                console.log(result)
+                var sigunSelect = $("#sigunCode");
+                sigunSelect.empty();
+                sigunSelect.append('<option value="">전체</option>');
+                if (result && result.length > 0) {
+                    result.forEach(function(item) {
+                        var option = `<option value="${item.code}">${item.name}</option>`;
+                        sigunSelect.append(option);
+                    });
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            },
+        });
     }
 
 </script>

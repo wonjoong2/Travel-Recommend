@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM TRAVEL_USER WHERE USER_ID = :userId", nativeQuery = true)
     List<User> BoardDetail(@Param("userId") String userId);
+
+    @Query(value = "SELECT USER_SEQ FROM TRAVEL_USER WHERE USER_ID = :userId", nativeQuery = true)
+    String userSeqCheck(@Param("userId") String userId);
 }

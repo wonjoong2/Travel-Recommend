@@ -23,17 +23,19 @@ public class OpenApiManager {
     private final String apiUri1 = "/areaBasedList1";
     //소개정보조회
     private final String apiUri2 = "/detailIntro1";
+    //지역코드조회
+    private final String apiUri3 = "/areaCode1";
     private final String serviceKey = "?ServiceKey=b2dGzeG6B3jL/B7DSWnpmASzrOYq7/X5t5eOQT01hikFxhxcfQJZTaWlRXAtRnBipog91ECkVA3tz/wOBrsbPA==";
     private final String defaultQueryParam = "&MobileOS=ETC&MobileApp=AppTest&_type=json";
     private final String numOfRows = "&numOfRows=10";
-    private final String pageNo = "&pageNo=";
 
-    private String makeUrl1(String areaCode,String pageNo) throws UnsupportedEncodingException {
+    private String makeUrl1(String areaCode,String sigunCode,String pageNo) throws UnsupportedEncodingException {
         return BASE_URL +
                 apiUri1 +
                 serviceKey +
                 defaultQueryParam +
                 numOfRows +
+                "&sigunguCode=" + sigunCode +
                 "&pageNo=" + pageNo +
                 "&areaCode=" + areaCode;
     }
@@ -46,13 +48,21 @@ public class OpenApiManager {
                 numOfRows +
                 "&contentTypeId=" + contentTypeId +
                 "&contentId=" + contentId;
-
     }
 
-    public ResponseEntity<?> fetch1(String areaCode,String pageNo) throws UnsupportedEncodingException {
+    private String makeUrl3(String areaCode) throws UnsupportedEncodingException {
+        return BASE_URL +
+                apiUri3 +
+                serviceKey +
+                defaultQueryParam +
+                "&numOfRows=30" +
+                "&areaCode=" + areaCode;
+    }
+
+    public ResponseEntity<?> fetch1(String areaCode,String sigunCode, String pageNo) throws UnsupportedEncodingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<?> entity = new HttpEntity<>(new HttpHeaders());
-        ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl1(areaCode,pageNo), HttpMethod.GET, entity, Map.class);
+        ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl1(areaCode,sigunCode,pageNo), HttpMethod.GET, entity, Map.class);
         log.info("resultMap : " ,resultMap.getBody());
         return resultMap;
 
@@ -64,6 +74,12 @@ public class OpenApiManager {
         ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl2(contentId, contentTypeId), HttpMethod.GET, entity, Map.class);
         log.info("resultMap : " ,resultMap.getBody());
         return resultMap;
-
+    }
+    public ResponseEntity<?> fetch3(String areaCode) throws UnsupportedEncodingException {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<?> entity = new HttpEntity<>(new HttpHeaders());
+        ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl3(areaCode), HttpMethod.GET, entity, Map.class);
+        log.info("resultMap : " ,resultMap.getBody());
+        return resultMap;
     }
 }

@@ -14,4 +14,5 @@ public interface UserService {
     int userUpdatePw(Map<String, Object> params);
     List<User> userDetail(String userId);
     int UpdateUser(Map<String, Object> params);
+    String userSeqCheck(String userId);
 }

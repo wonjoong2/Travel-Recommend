@@ -12,6 +12,7 @@
       contentId: $("#contentId").val(),
       contentTypeId : $("#contentTypeId").val(),
     }
+    console.log(params)
     $.ajax({
       url: '/travel/api/travel-api2',
       type: 'get',
@@ -19,6 +20,7 @@
       dataType: 'json',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       success: function(data) {
+        console.log(data)
         var contentTypeId = params.contentTypeId; // contentTypeId 가져오기
         renderUI(contentTypeId, data.response.body.items.item[0]); // UI 렌더링 함수 호출
       },
@@ -34,33 +36,34 @@
 
       var title = $("#title").val();
       var imageSrc = $("#firstImage").val() ? $("#firstImage").val() : '';
-      var html = `<div><h3>${title || '제목 없음'}</h3></div>`; // 공통 헤더
+      var html = `<div><input type="button" class="btn btn-primary mb-2" value="내목록에 저장" onclick="saveBtn()"></div>`; // 저장Btn
+          html += `<div><h3>${title || '제목 없음'}</h3></div>`; // 공통 헤더
           html += `${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 400px; height: 200px;">` : ''}`;
       if (contentTypeId == "12") { // 일반 관광지
         html += `
-            <p>수용인원: ${data.accomcount || '정보 없음'}</p>
-            <p>유모차 대여: ${data.chkbabycarriage || '정보 없음'}</p>
-            <p>신용카드 사용: ${data.chkcreditcard || '정보 없음'}</p>
-            <p>애완동물 가능: ${data.chkpet || '정보 없음'}</p>
-            <p>체험 가능 연령: ${data.expagerange || '정보 없음'}</p>
-            <p>문의 및 안내: ${data.infocenter || '정보 없음'}</p>
-            <p>개장일: ${data.opendate || '정보 없음'}</p>
-            <p>쉬는 날: ${data.restdate || '정보 없음'}</p>
-            <p>이용 시기: ${data.useseason || '정보 없음'}</p>
-            <p>이용 시간: ${data.usetime || '정보 없음'}</p>
+            <p data-key="accomCount">수용인원: ${data.accomcount || '정보 없음'}</p>
+            <p data-key="chkBabyCarriage">유모차 대여: ${data.chkbabycarriage || '정보 없음'}</p>
+            <p data-key="chkCreditCard">신용카드 사용: ${data.chkcreditcard || '정보 없음'}</p>
+            <p data-key="chkPet">애완동물 가능: ${data.chkpet || '정보 없음'}</p>
+            <p data-key="expAgeRange">체험 가능 연령: ${data.expagerange || '정보 없음'}</p>
+            <p data-key="infoCenter">문의 및 안내: ${data.infocenter || '정보 없음'}</p>
+            <p data-key="openDate">개장일: ${data.opendate || '정보 없음'}</p>
+            <p data-key="restDate">쉬는 날: ${data.restdate || '정보 없음'}</p>
+            <p data-key="useSeason">이용 시기: ${data.useseason || '정보 없음'}</p>
+            <p data-key="useTime">이용 시간: ${data.usetime || '정보 없음'}</p>
         `;
       }else if (contentTypeId == "14") { // 문화시설
-        var html = `
+            html += `
             <div>
-                <p>문의 및 안내: ${data.infocenterculture || '정보 없음'}</p>
-                <p>주차시설: ${data.parkingculture || '정보 없음'}</p>
-                <p>이용요금: ${data.usefee || '정보 없음'}</p>
-                <p>규모: ${data.scale || '정보 없음'}</p>
+                <p data-key="infocenterculture">문의 및 안내: ${data.infocenterculture || '정보 없음'}</p>
+                <p data-key="parkingculture">주차시설: ${data.parkingculture || '정보 없음'}</p>
+                <p data-key="usefee">이용요금: ${data.usefee || '정보 없음'}</p>
+                <p data-key="scale">규모: ${data.scale || '정보 없음'}</p>
             </div>
         `;
-        container.append(html);
-      } else if (contentTypeId == "15") { // 행사/공연/축제
-        var html = `
+        // container.append(html);
+      } else if (contentTypeId ==  "15") { // 행사/공연/축제
+            html += `
             <div>
                 <p>행사 장소: ${data.eventplace || '정보 없음'}</p>
                 <p>행사 시작일: ${data.eventstartdate || '정보 없음'}</p>
@@ -68,15 +71,15 @@
                 <p>공연 시간: ${data.playtime || '정보 없음'}</p>
             </div>
         `;
-        container.append(html);
+        // container.append(html);
       }
       else if (contentTypeId == "25") { // 관광 코스
         html += `
-            <p>코스 총 거리: ${data.distance || '정보 없음'}</p>
-            <p>문의 및 안내: ${data.infocentertourcourse || '정보 없음'}</p>
-            <p>코스 일정: ${data.schedule || '정보 없음'}</p>
-            <p>총 소요 시간: ${data.taketime || '정보 없음'}</p>
-            <p>코스 테마: ${data.theme || '정보 없음'}</p>
+            <p data-key="distance">코스 총 거리: ${data.distance || '정보 없음'}</p>
+            <p data-key="infocentertourcourse">문의 및 안내: ${data.infocentertourcourse || '정보 없음'}</p>
+            <p data-key="schedule">코스 일정: ${data.schedule || '정보 없음'}</p>
+            <p data-key="taketime">총 소요 시간: ${data.taketime || '정보 없음'}</p>
+            <p data-key="theme">코스 테마: ${data.theme || '정보 없음'}</p>
         `;
       } else if (contentTypeId == "28") { // 레포츠
         html += `
@@ -119,13 +122,13 @@
         `;
       } else if (contentTypeId == "39") { // 음식
         html += `
-            <p>문의 및 안내: ${data.infocenterfood || '정보 없음'}</p>
-            <p>대표 메뉴: ${data.firstmenu || '정보 없음'}</p>
-            <p>영업 시간: ${data.opentimefood || '정보 없음'}</p>
-            <p>포장 가능: ${data.packing || '정보 없음'}</p>
-            <p>주차 시설: ${data.parkingfood || '정보 없음'}</p>
-            <p>취급 메뉴: ${data.treatmenu || '정보 없음'}</p>
-            <p>좌석 수: ${data.seat || '정보 없음'}</p>
+            <p data-key="infocenterfood">문의 및 안내: ${data.infocenterfood || '정보 없음'}</p>
+            <p data-key="firstmenu">대표 메뉴: ${data.firstmenu || '정보 없음'}</p>
+            <p data-key="opentimefood">영업 시간: ${data.opentimefood || '정보 없음'}</p>
+            <p data-key="packing">포장 가능: ${data.packing || '정보 없음'}</p>
+            <p data-key="parkingfood">주차 시설: ${data.parkingfood || '정보 없음'}</p>
+            <p data-key="treatmenu">취급 메뉴: ${data.treatmenu || '정보 없음'}</p>
+            <p data-key="seat">좌석 수: ${data.seat || '정보 없음'}</p>
         `;
       } else {
         html += `<p>해당 contentTypeId에 대한 정보가 없습니다.</p>`;
@@ -136,22 +139,29 @@
   });
 
   function saveBtn(){
-    var params={
-      boardSeq : $('#boardSeq').val(),
-      boardId : $('#id').val(),
-      boardTitle : $('#title').val(),
-      boardContent : $('#content').val(),
-    }
+    var params = {
+      contentTypeId : $("#contentTypeId").val(),
+    };
+    $(".container p").each(function() {
+      var key = $(this).data("key"); // 데이터 키로 사용
+      var value = $(this).text().split(":")[1]?.trim() || '정보 없음'; // ':' 뒤의 텍스트 값 추출
+      if (key) {
+        params[key] = value;
+      }
+    });
+    console.log("=================params")
+    console.log(params)
+    // return false
     if (confirm('저장하시겠습니까?')) {
       $.ajax({
-        url: '/board/UpdateBoard',
+        url: '/travel/InsertTravelInfo',
         type: 'post',
         data: params,
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         success: function (data) {
-          alert('수정완료');
-          window.opener.refresh();
+          console.log(data)
+          alert('저장완료');
         },
         error: function (err) {
           console.log(err);
@@ -159,6 +169,7 @@
       });
     }
   }
+
 </script>
 
 <body>

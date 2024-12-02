@@ -22,4 +22,9 @@ function myPageBtn(){
     CommonUtil.openPopup('/myPage/myPagePop', params, '마이페이지', 1400, 600, '');
 }
 
+function myTravelBtn(){
+    var params = {
 
+    }
+    CommonUtil.openPopup('/myPage/myTravelPop', params, '마이페이지', 1400, 600, '');
+}

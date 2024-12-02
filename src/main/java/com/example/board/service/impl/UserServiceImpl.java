@@ -1,6 +1,5 @@
 package com.example.board.service.impl;
 
-import com.example.board.DTO.Board;
 import com.example.board.DTO.User;
 import com.example.board.mapper.UserRepository;
 import com.example.board.service.UserService;
@@ -58,6 +57,11 @@ public class UserServiceImpl implements UserService {
 
         User updateUser = userRepository.save(user);
         return updateUser.getUserSeq();
+    }
+
+    @Override
+    public String userSeqCheck(String userId) {
+        return userRepository.userSeqCheck(userId);
     }
 
     @Override
