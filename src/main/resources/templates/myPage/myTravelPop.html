@@ -40,31 +40,6 @@
     </div>
     <div class="justify-content-center mb-3 pb-3">
       <div style="width: 100%; height: 50px;">
-        <span>지역 : </span>
-        <select class="btn btn-primary mb-2" style="width:100px;" id="areaCode" onchange="sigunCode(this)">
-          <option value="">전체</option>
-          <option value="1">서울</option>
-          <option value="6">부산</option>
-          <option value="4">대구</option>
-          <option value="2">인천</option>
-          <option value="5">광주</option>
-          <option value="3">대전</option>
-          <option value="7">울산</option>
-          <option value="8">세종</option>
-          <option value="31">경기</option>
-          <option value="32">강원</option>
-          <option value="33">충북</option>
-          <option value="34">충남</option>
-          <option value="35">경북</option>
-          <option value="36">경남</option>
-          <option value="37">전북</option>
-          <option value="38">전남</option>
-          <option value="39">제주</option>
-        </select>
-        <span>시군구 : </span>
-        <select class="btn btn-primary mb-2" style="width:15ㅗ0px;" id="sigunCode">
-
-        </select>
         <input type="button" style="float:right;" class="btn btn-primary mb-2" value="검색" onclick="apiTest()"/>
       </div>
     </div>
@@ -94,7 +69,8 @@
 </html>
 
 <script>
-  function apiTest(){
+  $(document).ready(function() {
+
     var params = {
       areaCode : $("#areaCode option:selected").val(),
       sigunCode : $("#sigunCode option:selected").val(),
@@ -110,6 +86,7 @@
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       success: function(data) {
         console.log(data.myGeneralTravelList)
+        console.log(data.myGeneralTravelList)
         var list = data.myGeneralTravelList;
         // var pageNo = data.response.body.pageNo;
         // var totalCount = data.response.body.totalCount;
@@ -120,19 +97,21 @@
         console.log(err);
       },
     });
-  }
+  });
 
   function renderTable(list) {
+    console.log("========================rendrTable")
+    console.log(list)
     var tbody = $("table tbody"); // <tbody> 요소 선택
     tbody.empty(); // 기존 내용을 비우기
 
     list.forEach(function(item) {
-      var imageSrc = item.firstimage ? item.firstimage : '';
+      var imageSrc = item.image ? item.image : '';
       var row = `
             <tr>
-                <td style="text-decoration-line: underline; cursor:pointer;" onclick="detailBtn('${item.contentid}', '${item.contenttypeid}', '${item.title}', '${item.firstimage}')">${item.addr1}</td>
-                <td>${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 100px; height: 50px;">` : ''}</td>
-                <td>${item.title}</td>
+                <td style="text-decoration-line: underline; width: 300px; cursor:pointer;" onclick="detailBtn('${item.contentId}', '${item.contentTypeId}', '${item.place}', '${item.image}','${item.address}')">${item.address}</td>
+                <td>${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 300px; height: 50px;">` : ''}</td>
+                <td style="width: 300px;">${item.place}</td>
             </tr>
         `;
       tbody.append(row);
@@ -199,47 +178,22 @@
   }
 
 
-  function detailBtn(contentId, contentTypeId, title, firstImage){
+  function detailBtn(contentId, contentTypeId, title, firstImage,addr1){
+
     var params = {
       contentId: contentId,
       contentTypeId: contentTypeId,
       title : title,
       firstImage : firstImage,
+      addr1 : addr1,
+      hideFlag : "hide"
     };
+    console.log("===================params1")
+    console.log(params)
     CommonUtil.openPopup('/travel/api/travelDetail', params, '여행코스 상세', 800, 600, '');
 
   }
 
-  function sigunCode(e){
-    var areaCode = e.value;
-    var params = {
-      areaCode : areaCode,
-    }
-    //시군구 코드 찾기
-    $.ajax({
-      url: '/travel/api/travel-api3',
-      type: 'get',
-      data: params,
-      dataType: 'json',
-      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-      success: function(data) {
-        var result = data.response.body.items.item;
-        console.log(result)
-        var sigunSelect = $("#sigunCode");
-        sigunSelect.empty();
-        sigunSelect.append('<option value="">전체</option>');
-        if (result && result.length > 0) {
-          result.forEach(function(item) {
-            var option = `<option value="${item.code}">${item.name}</option>`;
-            sigunSelect.append(option);
-          });
-        }
-      },
-      error: function(err) {
-        console.log(err);
-      },
-    });
-  }
 
 </script>
 <script type="text/javascript" th:src="@{/js/commonUtil/commonUtil.js}"></script>

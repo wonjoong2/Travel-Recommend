@@ -32,6 +32,13 @@ public class TravelServiceImpl implements TravelService {
         gT.setRestDate((String) params.get("restDate"));
         gT.setUseSeason((String) params.get("useSeason"));
         gT.setUseTime((String) params.get("useTime"));
+
+        gT.setAddress((String) params.get("addr1"));
+        gT.setImage((String) params.get("firstImage"));
+        gT.setPlace((String) params.get("title"));
+        gT.setContentId((String) params.get("contentId"));
+        gT.setContentTypeId((String) params.get("contentTypeId"));
+
         gT.setCreateId((String) params.get("userId"));
         gT.setCreateDt(LocalDateTime.now());
 

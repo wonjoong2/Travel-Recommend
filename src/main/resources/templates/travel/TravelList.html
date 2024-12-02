@@ -107,6 +107,8 @@
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function(data) {
+                console.log(data)
+                console.log(data)
                 var list = data.response.body.items.item;
                 var pageNo = data.response.body.pageNo;
                 var totalCount = data.response.body.totalCount;
@@ -127,7 +129,7 @@
             var imageSrc = item.firstimage ? item.firstimage : '';
             var row = `
             <tr>
-                <td style="text-decoration-line: underline; cursor:pointer;" onclick="detailBtn('${item.contentid}', '${item.contenttypeid}', '${item.title}', '${item.firstimage}')">${item.addr1}</td>
+                <td style="text-decoration-line: underline; cursor:pointer;" onclick="detailBtn('${item.contentid}', '${item.contenttypeid}', '${item.title}', '${item.firstimage}','${item.addr1}')">${item.addr1}</td>
                 <td>${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 100px; height: 50px;">` : ''}</td>
                 <td>${item.title}</td>
             </tr>
@@ -196,12 +198,14 @@
     }
 
 
-    function detailBtn(contentId, contentTypeId, title, firstImage){
+    function detailBtn(contentId, contentTypeId, title, firstImage,addr1){
         var params = {
             contentId: contentId,
             contentTypeId: contentTypeId,
             title : title,
             firstImage : firstImage,
+            addr1 : addr1,
+            hideFlag : "show",
         };
         CommonUtil.openPopup('/travel/api/travelDetail', params, '여행코스 상세', 800, 600, '');
 

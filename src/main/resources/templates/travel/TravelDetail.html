@@ -36,7 +36,7 @@
 
       var title = $("#title").val();
       var imageSrc = $("#firstImage").val() ? $("#firstImage").val() : '';
-      var html = `<div><input type="button" class="btn btn-primary mb-2" value="내목록에 저장" onclick="saveBtn()"></div>`; // 저장Btn
+      var html = `<div><input type="button" class="btn btn-primary mb-2" value="내목록에 저장" id="saveBtn1" onclick="saveBtn()"></div>`; // 저장Btn
           html += `<div><h3>${title || '제목 없음'}</h3></div>`; // 공통 헤더
           html += `${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 400px; height: 200px;">` : ''}`;
       if (contentTypeId == "12") { // 일반 관광지
@@ -135,12 +135,20 @@
       }
 
       container.append(html);
+
+      if ($("#hideFlag").val() === "hide") {
+        $("#saveBtn1").hide();
+      }
     }
   });
 
   function saveBtn(){
     var params = {
       contentTypeId : $("#contentTypeId").val(),
+      contentId : $("#contentId").val(),
+      title : $("#title").val(),
+      firstImage : $("#firstImage").val(),
+      addr1 : $("#addr1").val(),
     };
     $(".container p").each(function() {
       var key = $(this).data("key"); // 데이터 키로 사용
@@ -182,5 +190,8 @@
 <input type="hidden" id="contentTypeId" th:value="${TravelDetail.contentTypeId}">
 <input type="hidden" id="title" th:value="${TravelDetail.title}">
 <input type="hidden" id="firstImage" th:value="${TravelDetail.firstImage}">
+<input type="hidden" id="addr1" th:value="${TravelDetail.addr1}">
+<input type="hidden" id="hideFlag" th:value="${TravelDetail.hideFlag}">
+
 </body>
 </html>

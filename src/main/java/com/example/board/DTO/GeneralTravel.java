@@ -48,6 +48,21 @@ public class GeneralTravel {
     @Column(name = "USE_TIME", length = 255)
     private String useTime; // 이용 시간
 
+    @Column(name = "ADDRESS", length = 255)
+    private String address; //주소
+
+    @Column(name = "PLACE", length = 255)
+    private String place;   //장소
+
+    @Column(name = "IMAGE", length = 255)
+    private String image;   //이미지
+
+    @Column(name = "CONTENT_ID", length = 255)
+    private String contentId; // contentId
+
+    @Column(name = "CONTENT_TYPE_ID", length = 255)
+    private String contentTypeId; // contentTypeId
+
     @Column(name = "CREATE_ID", length = 100)
     private String createId; // 데이터 생성자 ID
 

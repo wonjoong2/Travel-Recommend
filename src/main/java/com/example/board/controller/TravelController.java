@@ -45,6 +45,9 @@ public class TravelController {
 
     @PostMapping(value = "/api/travelDetail")
     public String travelDetail(@RequestParam Map<String, Object> params , Board vo, Model model) {
+        System.out.println("======================asd");
+        System.out.println(params);
+        System.out.println(params);
         model.addAttribute("TravelDetail", params);
         return "/travel/TravelDetail";
     }
