@@ -55,9 +55,9 @@
       }else if (contentTypeId == "14") { // 문화시설
             html += `
             <div>
-                <p data-key="infocenterculture">문의 및 안내: ${data.infocenterculture || '정보 없음'}</p>
-                <p data-key="parkingculture">주차시설: ${data.parkingculture || '정보 없음'}</p>
-                <p data-key="usefee">이용요금: ${data.usefee || '정보 없음'}</p>
+                <p data-key="infoCenterCulture">문의 및 안내: ${data.infocenterculture || '정보 없음'}</p>
+                <p data-key="parkingCulture">주차시설: ${data.parkingculture || '정보 없음'}</p>
+                <p data-key="useFee">이용요금: ${data.usefee || '정보 없음'}</p>
                 <p data-key="scale">규모: ${data.scale || '정보 없음'}</p>
             </div>
         `;
@@ -65,10 +65,10 @@
       } else if (contentTypeId ==  "15") { // 행사/공연/축제
             html += `
             <div>
-                <p>행사 장소: ${data.eventplace || '정보 없음'}</p>
-                <p>행사 시작일: ${data.eventstartdate || '정보 없음'}</p>
-                <p>행사 종료일: ${data.eventenddate || '정보 없음'}</p>
-                <p>공연 시간: ${data.playtime || '정보 없음'}</p>
+                <p data-key="eventPlace">행사 장소: ${data.eventplace || '정보 없음'}</p>
+                <p data-key="eventStartDate">행사 시작일: ${data.eventstartdate || '정보 없음'}</p>
+                <p data-key="eventEndDate">행사 종료일: ${data.eventenddate || '정보 없음'}</p>
+                <p data-key="playTime">공연 시간: ${data.playtime || '정보 없음'}</p>
             </div>
         `;
         // container.append(html);
@@ -76,60 +76,60 @@
       else if (contentTypeId == "25") { // 관광 코스
         html += `
             <p data-key="distance">코스 총 거리: ${data.distance || '정보 없음'}</p>
-            <p data-key="infocentertourcourse">문의 및 안내: ${data.infocentertourcourse || '정보 없음'}</p>
+            <p data-key="infoCenterTourCourse">문의 및 안내: ${data.infocentertourcourse || '정보 없음'}</p>
             <p data-key="schedule">코스 일정: ${data.schedule || '정보 없음'}</p>
-            <p data-key="taketime">총 소요 시간: ${data.taketime || '정보 없음'}</p>
+            <p data-key="takeTime">총 소요 시간: ${data.taketime || '정보 없음'}</p>
             <p data-key="theme">코스 테마: ${data.theme || '정보 없음'}</p>
         `;
-      } else if (contentTypeId == "28") { // 레포츠
+      }else if (contentTypeId == "28") { // 레포츠
         html += `
-            <p>수용 인원: ${data.accomcountleports || '정보 없음'}</p>
-            <p>유모차 대여: ${data.chkbabycarriageleports || '정보 없음'}</p>
-            <p>신용카드 사용: ${data.chkcreditcardleports || '정보 없음'}</p>
-            <p>체험 가능 연령: ${data.expagerangeleports || '정보 없음'}</p>
-            <p>문의 및 안내: ${data.infocenterleports || '정보 없음'}</p>
-            <p>개장 기간: ${data.openperiod || '정보 없음'}</p>
-            <p>주차 요금: ${data.parkingfeeleports || '정보 없음'}</p>
-            <p>주차 시설: ${data.parkingleports || '정보 없음'}</p>
-            <p>예약 안내: ${data.reservation || '정보 없음'}</p>
-            <p>쉬는 날: ${data.restdateleports || '정보 없음'}</p>
-            <p>규모: ${data.scaleleports || '정보 없음'}</p>
-            <p>입장료: ${data.usefeeleports || '정보 없음'}</p>
-            <p>이용 시간: ${data.usetimeleports || '정보 없음'}</p>
+        <p data-key="accomCountLeports">수용 인원: ${data.accomcountleports || '정보 없음'}</p>
+        <p data-key="chkBabyCarriageLeports">유모차 대여: ${data.chkbabycarriageleports || '정보 없음'}</p>
+        <p data-key="chkCreditCardLeports">신용카드 사용: ${data.chkcreditcardleports || '정보 없음'}</p>
+        <p data-key="expAgeRangeLeports">체험 가능 연령: ${data.expagerangeleports || '정보 없음'}</p>
+        <p data-key="infoCenterLeports">문의 및 안내: ${data.infocenterleports || '정보 없음'}</p>
+        <p data-key="openPeriod">개장 기간: ${data.openperiod || '정보 없음'}</p>
+        <p data-key="parkingFeeLeports">주차 요금: ${data.parkingfeeleports || '정보 없음'}</p>
+        <p data-key="parkingLeports">주차 시설: ${data.parkingleports || '정보 없음'}</p>
+        <p data-key="reservation">예약 안내: ${data.reservation || '정보 없음'}</p>
+        <p data-key="restDateLeports">쉬는 날: ${data.restdateleports || '정보 없음'}</p>
+        <p data-key="scaleLeports">규모: ${data.scaleleports || '정보 없음'}</p>
+        <p data-key="useFeeLeports">입장료: ${data.usefeeleports || '정보 없음'}</p>
+        <p data-key="useTimeLeports">이용 시간: ${data.usetimeleports || '정보 없음'}</p>
         `;
       } else if (contentTypeId == "32") { // 숙박
         html += `
-            <p>수용 가능 인원: ${data.accomcountlodging || '정보 없음'}</p>
-            <p>베니키아 여부: ${data.benikia || '정보 없음'}</p>
-            <p>입실 시간: ${data.checkintime || '정보 없음'}</p>
-            <p>퇴실 시간: ${data.checkouttime || '정보 없음'}</p>
-            <p>객실 내 취사 여부: ${data.chkcooking || '정보 없음'}</p>
-            <p>문의 및 안내: ${data.infocenterlodging || '정보 없음'}</p>
-            <p>주차 시설: ${data.parkinglodging || '정보 없음'}</p>
-            <p>객실 수: ${data.roomcount || '정보 없음'}</p>
-            <p>예약 안내: ${data.reservationlodging || '정보 없음'}</p>
-            <p>규모: ${data.scalelodging || '정보 없음'}</p>
-            <p>환불 규정: ${data.refundregulation || '정보 없음'}</p>
-        `;
+        <p data-key="accomCountLodging">수용 가능 인원: ${data.accomcountlodging || '정보 없음'}</p>
+        <p data-key="benikia">베니키아 여부: ${data.benikia || '정보 없음'}</p>
+        <p data-key="checkInTime">입실 시간: ${data.checkintime || '정보 없음'}</p>
+        <p data-key="checkOutTime">퇴실 시간: ${data.checkouttime || '정보 없음'}</p>
+        <p data-key="chkCooking">객실 내 취사 여부: ${data.chkcooking || '정보 없음'}</p>
+        <p data-key="infoCenterLodging">문의 및 안내: ${data.infocenterlodging || '정보 없음'}</p>
+        <p data-key="parkingLodging">주차 시설: ${data.parkinglodging || '정보 없음'}</p>
+        <p data-key="roomCount">객실 수: ${data.roomcount || '정보 없음'}</p>
+        <p data-key="reservationLodging">예약 안내: ${data.reservationlodging || '정보 없음'}</p>
+        <p data-key="scaleLodging">규모: ${data.scalelodging || '정보 없음'}</p>
+        <p data-key="refundRegulation">환불 규정: ${data.refundregulation || '정보 없음'}</p>
+    `;
       } else if (contentTypeId == "38") { // 쇼핑
         html += `
-            <p>문의 및 안내: ${data.infocentershopping || '정보 없음'}</p>
-            <p>개장일: ${data.opendateshopping || '정보 없음'}</p>
-            <p>영업 시간: ${data.opentime || '정보 없음'}</p>
-            <p>주차 시설: ${data.parkingshopping || '정보 없음'}</p>
-            <p>판매 품목: ${data.saleitem || '정보 없음'}</p>
-            <p>매장 안내: ${data.shopguide || '정보 없음'}</p>
-        `;
+        <p data-key="infoCenterShopping">문의 및 안내: ${data.infocentershopping || '정보 없음'}</p>
+        <p data-key="openDateShopping">개장일: ${data.opendateshopping || '정보 없음'}</p>
+        <p data-key="openTime">영업 시간: ${data.opentime || '정보 없음'}</p>
+        <p data-key="parkingShopping">주차 시설: ${data.parkingshopping || '정보 없음'}</p>
+        <p data-key="saleItem">판매 품목: ${data.saleitem || '정보 없음'}</p>
+        <p data-key="shopGuide">매장 안내: ${data.shopguide || '정보 없음'}</p>
+    `;
       } else if (contentTypeId == "39") { // 음식
         html += `
-            <p data-key="infocenterfood">문의 및 안내: ${data.infocenterfood || '정보 없음'}</p>
-            <p data-key="firstmenu">대표 메뉴: ${data.firstmenu || '정보 없음'}</p>
-            <p data-key="opentimefood">영업 시간: ${data.opentimefood || '정보 없음'}</p>
-            <p data-key="packing">포장 가능: ${data.packing || '정보 없음'}</p>
-            <p data-key="parkingfood">주차 시설: ${data.parkingfood || '정보 없음'}</p>
-            <p data-key="treatmenu">취급 메뉴: ${data.treatmenu || '정보 없음'}</p>
-            <p data-key="seat">좌석 수: ${data.seat || '정보 없음'}</p>
-        `;
+        <p data-key="infoCenterFood">문의 및 안내: ${data.infocenterfood || '정보 없음'}</p>
+        <p data-key="firstMenu">대표 메뉴: ${data.firstmenu || '정보 없음'}</p>
+        <p data-key="openTimeFood">영업 시간: ${data.opentimefood || '정보 없음'}</p>
+        <p data-key="packing">포장 가능: ${data.packing || '정보 없음'}</p>
+        <p data-key="parkingFood">주차 시설: ${data.parkingfood || '정보 없음'}</p>
+        <p data-key="treatMenu">취급 메뉴: ${data.treatmenu || '정보 없음'}</p>
+        <p data-key="seat">좌석 수: ${data.seat || '정보 없음'}</p>
+    `;
       } else {
         html += `<p>해당 contentTypeId에 대한 정보가 없습니다.</p>`;
       }

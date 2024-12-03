@@ -1,4 +1,4 @@
-package com.example.board.DTO;
+package com.example.board.DTO.Travel;
 
 import jakarta.persistence.*;
 import lombok.Data;

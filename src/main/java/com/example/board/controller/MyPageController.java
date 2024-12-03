@@ -54,4 +54,11 @@ public class MyPageController {
 
         return myPageService.myTravelList(params);
     }
+
+    @RequestMapping(value = "/myGoogleMapPop" , method = RequestMethod.POST)
+    public String myGoogleMapPop(@RequestParam Map<String, Object> params , Board vo, Model model, HttpSession session) {
+
+        return "/mypage/myGoogleMapPop";
+
+    }
 }

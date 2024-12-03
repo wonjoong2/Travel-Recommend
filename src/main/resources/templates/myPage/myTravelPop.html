@@ -7,27 +7,6 @@
   <link href="/css/style.css" rel="stylesheet" type="text/css">
   <link href="/css/board/BoardList.css" rel="stylesheet" type="text/css">
 </head>
-<style>
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-  }
-
-  .page-btn {
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    cursor: pointer;
-  }
-
-  .page-btn.active {
-    font-weight: bold;
-    background-color: #007bff;
-    color: white;
-  }
-</style>
 <body>
 <div class="ftco-section admin-list">
   <div class="container">
@@ -40,7 +19,7 @@
     </div>
     <div class="justify-content-center mb-3 pb-3">
       <div style="width: 100%; height: 50px;">
-        <input type="button" style="float:right;" class="btn btn-primary mb-2" value="검색" onclick="apiTest()"/>
+        <input type="button" style="float:right;" class="btn btn-primary mb-2" value="지도 보기" onclick="googleMapPop()"/>
       </div>
     </div>
     <div class="bd-example-snippet bd-code-snippet">
@@ -69,8 +48,8 @@
 </html>
 
 <script>
+  let list = [];
   $(document).ready(function() {
-
     var params = {
       areaCode : $("#areaCode option:selected").val(),
       sigunCode : $("#sigunCode option:selected").val(),
@@ -85,19 +64,46 @@
       dataType: 'json',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       success: function(data) {
+        console.log(data)
         console.log(data.myGeneralTravelList)
-        console.log(data.myGeneralTravelList)
-        var list = data.myGeneralTravelList;
-        // var pageNo = data.response.body.pageNo;
-        // var totalCount = data.response.body.totalCount;
+        console.log(data.myEventList)
+
+        list = [
+          ...data.myEventList,
+          ...data.myCultureList,
+          ...data.myFoodList,
+          ...data.myGeneralTravelList,
+          ...data.myLeisureSportsList,
+          ...data.myLodgingList,
+          ...data.myShoppingList,
+          ...data.myTourCourseList,
+        ];
         renderTable(list);
-        // renderPagination(pageNo, totalCount);
       },
       error: function(err) {
         console.log(err);
       },
     });
   });
+
+  function getCoordinates(addresses, callback) {
+    const apiKey = "AIzaSyCLfQbPsyguK63fGVLprSUDBOuhy2fLCs4"; // Google Geocoding API Key
+    const geocodePromises = addresses.map((address) => {
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+      return $.getJSON(url).then((data) => {
+        if (data.status === "OK") {
+          const location = data.results[0].geometry.location;
+          return { address, lat: location.lat, lng: location.lng };
+        } else {
+          console.error("Geocoding failed for:", address, data.status);
+          return null;
+        }
+      });
+    });
+    // 모든 요청이 완료되면 callback 실행
+    Promise.all(geocodePromises).then(callback);
+  }
+
 
   function renderTable(list) {
     console.log("========================rendrTable")
@@ -109,71 +115,12 @@
       var imageSrc = item.image ? item.image : '';
       var row = `
             <tr>
-                <td style="text-decoration-line: underline; width: 300px; cursor:pointer;" onclick="detailBtn('${item.contentId}', '${item.contentTypeId}', '${item.place}', '${item.image}','${item.address}')">${item.address}</td>
-                <td>${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 300px; height: 50px;">` : ''}</td>
+                <td style="text-decoration-line: underline; width: 500px; cursor:pointer;" onclick="detailBtn('${item.contentId}', '${item.contentTypeId}', '${item.place}', '${item.image}','${item.address}')">${item.address}</td>
+                <td>${imageSrc ? `<img src="${imageSrc}" alt="이미지" style="width: 100px; height: 50px;">` : ''}</td>
                 <td style="width: 300px;">${item.place}</td>
             </tr>
         `;
       tbody.append(row);
-    });
-  }
-
-  function renderPagination(pageNo, totalCount, itemsPerPage = 10, groupSize = 10) {
-    var pagination = $("#pagination");
-    pagination.empty(); // 기존 버튼 제거
-
-    var totalPages = Math.ceil(totalCount / itemsPerPage); // 총 페이지 수
-    var currentGroup = Math.ceil(pageNo / groupSize); // 현재 그룹 번호
-    var startPage = (currentGroup - 1) * groupSize + 1; // 현재 그룹의 첫 번째 페이지 번호
-    var endPage = Math.min(startPage + groupSize - 1, totalPages); // 현재 그룹의 마지막 페이지 번호
-
-    // 이전 그룹 버튼
-    if (startPage > 1) {
-      pagination.append(
-              `<button class="page-btn" onclick="changePage(${startPage - 1})"><<</button>`
-      );
-    }
-
-    // 현재 그룹의 페이지 버튼들
-    for (var i = startPage; i <= endPage; i++) {
-      var pageButton = `<button
-            class="page-btn ${i === pageNo ? 'active' : ''}"
-            onclick="changePage(${i})">${i}</button>`;
-      pagination.append(pageButton);
-    }
-
-    // 다음 그룹 버튼
-    if (endPage < totalPages) {
-      pagination.append(
-              `<button class="page-btn" onclick="changePage(${endPage + 1})">>></button>`
-      );
-    }
-  }
-
-
-  function changePage(newPageNo) {
-    var params = {
-      areaCode: $("#areaCode option:selected").val(),
-      sigunCode : $("#sigunCode option:selected").val(),
-      pageNo: newPageNo, // 새로운 페이지 번호
-    };
-
-    $.ajax({
-      url: '/travel/api/travel-api1',
-      type: 'get',
-      data: params,
-      dataType: 'json',
-      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-      success: function(data) {
-        var list = data.response.body.items.item;
-        var pageNo = data.response.body.pageNo;
-        var totalCount = data.response.body.totalCount;
-        renderTable(list);
-        renderPagination(pageNo, totalCount);
-      },
-      error: function(err) {
-        console.log(err);
-      },
     });
   }
 
@@ -194,6 +141,17 @@
 
   }
 
+  function googleMapPop() {
+    const addresses = list.map((item) => item.address).filter(Boolean);
+    console.log("===================address")
+    console.log(addresses)
+
+    getCoordinates(addresses, (coordinates) => {
+      console.log("Coordinates:", coordinates);
+      const params = { locations: coordinates };
+      CommonUtil.openPopup("/myPage/myGoogleMapPop", params, "구글맵 보기", 800, 600, "");
+    });
+  }
 
 </script>
 <script type="text/javascript" th:src="@{/js/commonUtil/commonUtil.js}"></script>

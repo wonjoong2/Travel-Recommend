@@ -92,7 +92,6 @@
 </div>
 </body>
 </html>
-
 <script>
     function apiTest(){
         var params = {
@@ -185,6 +184,7 @@
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function(data) {
+                console.log(data)
                 var list = data.response.body.items.item;
                 var pageNo = data.response.body.pageNo;
                 var totalCount = data.response.body.totalCount;
@@ -241,6 +241,8 @@
             },
         });
     }
+
+
 
 </script>
 <script type="text/javascript" th:src="@{/js/commonUtil/commonUtil.js}"></script>
