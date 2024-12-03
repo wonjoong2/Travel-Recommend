@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.List;
 import java.util.Map;
@@ -55,10 +57,16 @@ public class MyPageController {
         return myPageService.myTravelList(params);
     }
 
-    @RequestMapping(value = "/myGoogleMapPop" , method = RequestMethod.POST)
-    public String myGoogleMapPop(@RequestParam Map<String, Object> params , Board vo, Model model, HttpSession session) {
-
-        return "/mypage/myGoogleMapPop";
-
+    @RequestMapping(value = "/myGoogleMapPop", method = RequestMethod.POST)
+    public String myGoogleMapPop(@RequestParam("locations") String locationsJson, Model model) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            // JSON 문자열을 List<Map<String, Object>>로 변환
+            List<Map<String, Object>> locations = objectMapper.readValue(locationsJson, new TypeReference<>() {});
+            model.addAttribute("locationsJson", locationsJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "/mypage/myGoogleMapPop"; // HTML 템플릿 경로
     }
 }

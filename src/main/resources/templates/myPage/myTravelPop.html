@@ -148,7 +148,8 @@
 
     getCoordinates(addresses, (coordinates) => {
       console.log("Coordinates:", coordinates);
-      const params = { locations: coordinates };
+      const params = { locations: JSON.stringify(coordinates) };
+      console.log(params)
       CommonUtil.openPopup("/myPage/myGoogleMapPop", params, "구글맵 보기", 800, 600, "");
     });
   }
