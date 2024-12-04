@@ -14,7 +14,7 @@
 
     <div class="justify-content-center mb-3 pb-3">
       <div class="heading-section text-center">
-        <h2>내여행 목록</h2>
+        <h2>Travel Course List</h2>
       </div>
     </div>
     <div class="justify-content-center mb-3 pb-3">
@@ -56,7 +56,6 @@
       pageNo : "1",
       userSeq : $("#userSeq").val(),
     };
-    console.log(params)
     $.ajax({
       url: '/myPage/myTravelList',
       type: 'get',
@@ -64,10 +63,6 @@
       dataType: 'json',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       success: function(data) {
-        console.log(data)
-        console.log(data.myGeneralTravelList)
-        console.log(data.myEventList)
-
         list = [
           ...data.myEventList,
           ...data.myCultureList,
@@ -86,28 +81,7 @@
     });
   });
 
-  function getCoordinates(addresses, callback) {
-    const apiKey = "AIzaSyCLfQbPsyguK63fGVLprSUDBOuhy2fLCs4"; // Google Geocoding API Key
-    const geocodePromises = addresses.map((address) => {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
-      return $.getJSON(url).then((data) => {
-        if (data.status === "OK") {
-          const location = data.results[0].geometry.location;
-          return { address, lat: location.lat, lng: location.lng };
-        } else {
-          console.error("Geocoding failed for:", address, data.status);
-          return null;
-        }
-      });
-    });
-    // 모든 요청이 완료되면 callback 실행
-    Promise.all(geocodePromises).then(callback);
-  }
-
-
   function renderTable(list) {
-    console.log("========================rendrTable")
-    console.log(list)
     var tbody = $("table tbody"); // <tbody> 요소 선택
     tbody.empty(); // 기존 내용을 비우기
 
@@ -135,22 +109,36 @@
       addr1 : addr1,
       hideFlag : "hide"
     };
-    console.log("===================params1")
-    console.log(params)
     CommonUtil.openPopup('/travel/api/travelDetail', params, '여행코스 상세', 800, 600, '');
 
   }
-
+  function getCoordinates(addresses, callback) {
+    console.log("==================seq2")
+    const apiKey = "AIzaSyCLfQbPsyguK63fGVLprSUDBOuhy2fLCs4"; // Google Geocoding API Key
+    const geocodePromises = addresses.map((address) => {
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+      return $.getJSON(url).then((data) => {
+        if (data.status === "OK") {
+          const location = data.results[0].geometry.location;
+          return { address, lat: location.lat, lng: location.lng };
+        } else {
+          console.error("Geocoding failed for:", address, data.status);
+          return null;
+        }
+      });
+    });
+    // 모든 요청이 완료되면 callback 실행
+    Promise.all(geocodePromises).then(callback);
+  }
   function googleMapPop() {
     const addresses = list.map((item) => item.address).filter(Boolean);
-    console.log("===================address")
-    console.log(addresses)
+    console.log("==================seq1")
 
     getCoordinates(addresses, (coordinates) => {
+      console.log("==================seq3")
       console.log("Coordinates:", coordinates);
       const params = { locations: JSON.stringify(coordinates) };
-      console.log(params)
-      CommonUtil.openPopup("/myPage/myGoogleMapPop", params, "구글맵 보기", 800, 600, "");
+      CommonUtil.openPopup("/myPage/myGoogleMapPop", params, "구글맵 보기", 800, 400, "");
     });
   }
 
