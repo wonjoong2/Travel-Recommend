@@ -22,20 +22,36 @@ import java.util.Map;
 public class BoardController {
 
     private final BoardService boardService;
-    private final UserService userService;
 
-    /*
-    *
-    */
+    /**
+     * @Method Name : BoardList
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community View
+     * @param model
+     * @return
+     */
     @RequestMapping("/board/BoardList")
-    public String BoardList(Model model) {
+    public String BoardList(Model model,HttpSession session){
         List<Board> boardList = boardService.BoardList();
-        System.out.println(boardList);
-        System.out.println(boardList);
+        String userId = (String) session.getAttribute("userId");
+        System.out.println("=================");
+        System.out.println(userId);
         model.addAttribute("BoardList", boardList);
 
         return "/board/BoardList";
     }
+
+    /**
+     * @Method Name : BoardRegisterPage
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community Register View
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/board/BoardRegister", method = RequestMethod.GET)
     public String BoardRegisterPage(HttpSession session, Model model) {
 
@@ -44,6 +60,16 @@ public class BoardController {
         return "/board/BoardRegister";
 
     }
+
+    /**
+     * @Method Name : BoardRegister
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community Register
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/board/BoardRegister", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public int BoardRegister(@RequestParam Map<String, Object> params,HttpSession session) {
@@ -55,8 +81,17 @@ public class BoardController {
 
         return result;
     }
+    /**
+     * @Method Name : BoardDetail
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community Detail View
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/board/BoardDetail" , method = RequestMethod.POST)
-    public String BoardDetail(@RequestParam Map<String, Object> params , Board vo, Model model) {
+    public String BoardDetail(@RequestParam Map<String, Object> params , Model model) {
 
         List<Board> boardDetail = boardService.BoardDetail(params);
         model.addAttribute("BoardDetail", boardDetail);
@@ -64,6 +99,15 @@ public class BoardController {
         return "/board/BoardDetail";
 
     }
+    /**
+     * @Method Name : BoardCntUpdate
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community 조회수 Update
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/board/BoardCntUpdate", method = RequestMethod.POST)
     @ResponseBody
     public int BoardCntUpdate(@RequestParam Map<String, Object> params) {
@@ -75,6 +119,15 @@ public class BoardController {
         return result;
     }
 
+    /**
+     * @Method Name : BoardModifyCheck
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community 수정 가능한지 Check
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/board/BoardModifyCheck", method = RequestMethod.POST)
     @ResponseBody
     public int BoardModifyCheck(@RequestParam Map<String, Object> params, HttpSession session) {
@@ -84,6 +137,15 @@ public class BoardController {
         return result;
     }
 
+    /**
+     * @Method Name : UpdateBoard
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community Update
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/board/UpdateBoard", method = RequestMethod.POST)
     @ResponseBody
     public int UpdateBoard(@RequestParam Map<String, Object> params) {
@@ -91,6 +153,15 @@ public class BoardController {
         return result;
     }
 
+    /**
+     * @Method Name : selectBoardList
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community 검색 조건 Filtering
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/board/selectBoardList", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> selectBoardList(@RequestParam Map<String, Object> params) {
@@ -99,6 +170,15 @@ public class BoardController {
         return map;
     }
 
+    /**
+     * @Method Name : deleteBoard
+     * @작성일 : 2024. 12. 08.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Community delete
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/board/deleteBoard", method = RequestMethod.POST)
     @ResponseBody
     public int deleteBoard(@RequestBody Map<String, Object> params) {
