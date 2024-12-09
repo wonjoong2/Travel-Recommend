@@ -15,6 +15,17 @@ public class User {
 	@Column(name = "user_id", nullable = false, unique = true) // 컬럼 매핑
 	private String userId;
 
+	@Column(name = "user_nickname")
+	private String userNickname;
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+
 	@Column(name = "user_pwd", nullable = false)
 	private String userPwd;
 
@@ -160,6 +171,7 @@ public class User {
 		return "User{" +
 				"userSeq=" + userSeq +
 				", userId='" + userId + '\'' +
+				", userNickname='" + userNickname + '\'' +
 				", userPwd='" + userPwd + '\'' +
 				", userNm='" + userNm + '\'' +
 				", userPhone='" + userPhone + '\'' +

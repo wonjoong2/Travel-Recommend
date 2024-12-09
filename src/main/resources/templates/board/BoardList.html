@@ -35,9 +35,10 @@
                         <th scope="col" style="width: 30px;">
                             <input type="checkbox" id="selectAll" onclick="checkBoxAll(this)">
                         </th>
-                        <th scope="col" style="width: 90px;">제목</th>
-                        <th scope="col" style="width: 90px;">날짜정보</th>
-                        <th scope="col" style="width: 90px;">조회수</th>
+                        <th scope="col" style="width: 60px;">닉네임</th>
+                        <th scope="col" style="width: 120px;">제목</th>
+                        <th scope="col" style="width: 60px;">날짜정보</th>
+                        <th scope="col" style="width: 30px;">조회수</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,6 +46,7 @@
                         <td>
                             <input type="checkbox" class="row-checkbox" th:value="${board.boardSeq}">
                         </td>
+                        <td></td>
                         <td style="text-decoration-line: underline; cursor:pointer;" th:text="${board.boardTitle}" th:onclick="'detailBtn(' + ${board.boardSeq} + ')'"></td>
                         <td th:text="${board.boardCreateDt}"></td>
                         <td th:text="${board.boardCnt}"></td>
@@ -94,6 +96,7 @@
                 list.forEach(function(board) {
                     var row = '<tr>' +
                         '<td> <input type="checkbox" class="row-checkbox" value="' + board.boardSeq + '"> </td>' +
+                        '<td></td>'+
                         '<td style="text-decoration-line: underline; cursor:pointer;" onclick="detailBtn(' + board.boardSeq + ')">' + board.boardTitle + '</td>' +
                         '<td>' + board.boardCreateDt + '</td>' +
                         '<td>' + board.boardCnt + '</td>' +

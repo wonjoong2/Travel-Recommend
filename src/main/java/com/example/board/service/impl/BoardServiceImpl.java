@@ -18,7 +18,7 @@ public class BoardServiceImpl implements BoardService {
     private BoardRepository boardRepository;
 
     public List<Board> BoardList() {
-        return boardRepository.findAll();
+        return boardRepository.BoardList();
     }
 
     @Override

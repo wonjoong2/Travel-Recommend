@@ -1,7 +1,9 @@
 package com.example.board.controller;
 
 import com.example.board.DTO.Board;
+import com.example.board.DTO.User;
 import com.example.board.service.BoardService;
+import com.example.board.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class BoardController {
 
     private final BoardService boardService;
+    private final UserService userService;
 
     /*
     *
@@ -27,13 +30,17 @@ public class BoardController {
     @RequestMapping("/board/BoardList")
     public String BoardList(Model model) {
         List<Board> boardList = boardService.BoardList();
+        System.out.println(boardList);
+        System.out.println(boardList);
         model.addAttribute("BoardList", boardList);
 
         return "/board/BoardList";
     }
     @RequestMapping(value = "/board/BoardRegister", method = RequestMethod.GET)
-    public String BoardRegisterPage() {
+    public String BoardRegisterPage(HttpSession session, Model model) {
 
+        String userId = (String) session.getAttribute("userId");
+        model.addAttribute("userId", userId);
         return "/board/BoardRegister";
 
     }

@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> userDetail(String userId) {
-        return userRepository.BoardDetail(userId);
+        return userRepository.userDetail(userId);
     }
 
     @Override
@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService {
     public int InsertUser(Map<String, Object> params) {
         User user = new User();
         user.setUserId((String) params.get("userId"));
+        user.setUserNickname((String) params.get("userNickname"));
         user.setUserPwd((String) params.get("userPwd"));
         user.setUserNm((String) params.get("userNm"));
         user.setUserPhone((String) params.get("userPhone"));
