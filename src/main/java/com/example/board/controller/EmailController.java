@@ -19,9 +19,18 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
+    /**
+     * @Method Name : userAuthEmail
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : E-mail 인증 전송
+     * @param params
+     * @return
+     */
     @PostMapping("/userAuthEmail")
     @ResponseBody
-    public Map<String, String> mailSend(@RequestParam Map<String, Object> params) throws MessagingException {
+    public Map<String, String> userAuthEmail(@RequestParam Map<String, Object> params) throws MessagingException {
         String email = (String) params.get("userEmail");
         String authCode = emailService.sendEmail(email);
         emailService.sendEmail(email);
@@ -32,6 +41,15 @@ public class EmailController {
         return response;
     }
 
+    /**
+     * @Method Name : mailIdFind
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : Id 찾기 Popup View
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/mailIdFind", method = RequestMethod.POST)
     public String mailIdFind(@RequestParam Map<String, Object> params, Model model) {
         String result = emailService.mailIdFind(params);
@@ -41,13 +59,30 @@ public class EmailController {
         return "/mail/FindId";
     }
 
-
+    /**
+     * @Method Name : mailPwFindPop
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : PW 찾기 Popup View
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/mailPwFindPop", method = RequestMethod.POST)
     public String mailPwFindPop(@RequestParam Map<String, Object> params,Model model) {
         model.addAttribute("params", params);
         return "/mail/FindPw";
     }
 
+    /**
+     * @Method Name : mailPwFind
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : 새 비밀번호 변경
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/mailPwFind", method = RequestMethod.POST)
     @ResponseBody
     public int mailPwFind(@RequestParam Map<String, Object> params, Model model) {

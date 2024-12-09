@@ -26,8 +26,17 @@ public class MyPageController {
     private final UserService userService;
     private final MyPageService myPageService;
 
+    /**
+     * @Method Name : myPagePop
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : myPage Popup View
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/myPagePop" , method = RequestMethod.POST)
-    public String myPagePop(@RequestParam Map<String, Object> params , Board vo, Model model, HttpSession session) {
+    public String myPagePop(@RequestParam Map<String, Object> params , Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         List<User> userDetail =  userService.userDetail(userId);
         System.out.println(userDetail);
@@ -36,7 +45,15 @@ public class MyPageController {
         return "/mypage/myPagePop";
 
     }
-
+    /**
+     * @Method Name : myTravelPop
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : myTravel Popup View
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/myTravelPop" , method = RequestMethod.POST)
     public String myTravelPop(@RequestParam Map<String, Object> params , Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
@@ -49,14 +66,30 @@ public class MyPageController {
         return "/mypage/myTravelPop";
 
     }
-
+    /**
+     * @Method Name : myPagePop
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : 내 여행목록 List
+     * @param params
+     * @return
+     */
     @RequestMapping("/myTravelList")
     @ResponseBody
     public Map<String, Object> myTravelList(Model model,@RequestParam Map<String, Object> params) throws Exception {
 
         return myPageService.myTravelList(params);
     }
-
+    /**
+     * @Method Name : myGoogleMapPop
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : 내 여행목록 GoogleMap View
+     * @param
+     * @return
+     */
     @RequestMapping(value = "/myGoogleMapPop", method = RequestMethod.POST)
     public String myGoogleMapPop(@RequestParam("locations") String locationsJson, Model model) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -67,6 +100,6 @@ public class MyPageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/mypage/myGoogleMapPop"; // HTML 템플릿 경로
+        return "/mypage/myGoogleMapPop";
     }
 }

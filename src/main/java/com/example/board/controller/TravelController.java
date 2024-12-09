@@ -25,16 +25,30 @@ public class TravelController {
     private final TravelService travelService;
     private final UserService userService;
 
-    /*
-    *
-    *
-    * */
+    /**
+     * @Method Name : TravelList
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : TravelList View
+     * @param
+     * @return
+     */
     @RequestMapping("/TravelList")
     public String TravelList(Model model) {
 
         return "/travel/TravelList";
     }
 
+    /**
+     * @Method Name : travel-api1
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : 지역, 시군구 별 여행 api
+     * @param params
+     * @return
+     */
     @GetMapping("/api/travel-api1")
     public ResponseEntity<?> fetch1(@RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
         String areaCode = (String) params.get("areaCode");
@@ -43,8 +57,17 @@ public class TravelController {
         return ResponseEntity.ok(openApiManager.fetch1(areaCode,sigunCode,pageNo).getBody());
     }
 
+    /**
+     * @Method Name : travelDetail
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : TravelDetail Popup View
+     * @param params
+     * @return
+     */
     @PostMapping(value = "/api/travelDetail")
-    public String travelDetail(@RequestParam Map<String, Object> params , Board vo, Model model) {
+    public String travelDetail(@RequestParam Map<String, Object> params , Model model) {
         System.out.println("======================asd");
         System.out.println(params);
         System.out.println(params);
@@ -52,6 +75,15 @@ public class TravelController {
         return "/travel/TravelDetail";
     }
 
+    /**
+     * @Method Name : travel-api2
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : 여행 상세 api
+     * @param params
+     * @return
+     */
     @GetMapping("/api/travel-api2")
     public ResponseEntity<?> fetch2(@RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
         String contentId = (String) params.get("contentId");
@@ -59,12 +91,30 @@ public class TravelController {
         return ResponseEntity.ok(openApiManager.fetch2(contentId,contentTypeId).getBody());
     }
 
+    /**
+     * @Method Name : travel-api3
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : 시군구 코드 찾기 api
+     * @param params
+     * @return
+     */
     @GetMapping("/api/travel-api3")
     public ResponseEntity<?> fetch3(@RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
         String areaCode = (String) params.get("areaCode");
         return ResponseEntity.ok(openApiManager.fetch3(areaCode).getBody());
     }
 
+    /**
+     * @Method Name : InsertTravelInfo
+     * @작성일 : 2024. 12. 09.
+     * @작성자 : "KWJ"
+     * @변경이력 :
+     * @Method 설명 : 여행 Insert
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/InsertTravelInfo", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public int InsertTravelInfo(@RequestParam Map<String, Object> params, HttpSession session) {
