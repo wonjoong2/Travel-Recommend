@@ -39,7 +39,6 @@ public class MyPageController {
     public String myPagePop(@RequestParam Map<String, Object> params , Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         List<User> userDetail =  userService.userDetail(userId);
-        System.out.println(userDetail);
         model.addAttribute("userDetail", userDetail.get(0));
 
         return "/mypage/myPagePop";
@@ -58,8 +57,6 @@ public class MyPageController {
     public String myTravelPop(@RequestParam Map<String, Object> params , Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         int userSeq = Integer.parseInt(userService.userSeqCheck(userId));
-        System.out.println("=================userSeq");
-        System.out.println(userSeq);
         params.put("userSeq",userSeq);
         model.addAttribute("params", params);
 

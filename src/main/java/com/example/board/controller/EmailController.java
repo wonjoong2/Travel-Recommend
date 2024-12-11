@@ -54,8 +54,6 @@ public class EmailController {
     public String mailIdFind(@RequestParam Map<String, Object> params, Model model) {
         String result = emailService.mailIdFind(params);
         model.addAttribute("result", result);
-        log.info(result);
-        log.info(result);
         return "/mail/FindId";
     }
 

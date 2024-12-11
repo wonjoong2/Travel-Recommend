@@ -68,9 +68,6 @@ public class TravelController {
      */
     @PostMapping(value = "/api/travelDetail")
     public String travelDetail(@RequestParam Map<String, Object> params , Model model) {
-        System.out.println("======================asd");
-        System.out.println(params);
-        System.out.println(params);
         model.addAttribute("TravelDetail", params);
         return "/travel/TravelDetail";
     }
@@ -125,11 +122,6 @@ public class TravelController {
         params.put("userId",userId);
 
         String contentTypeId = (String) params.get("contentTypeId");
-
-        System.out.println("====================");
-        System.out.println(params);
-        System.out.println(contentTypeId);
-        
         //일반 관광지
         if(contentTypeId.equals("12")){
             result = travelService.InsertGeneralTravel(params);
