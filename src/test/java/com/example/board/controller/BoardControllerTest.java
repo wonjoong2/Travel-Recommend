@@ -54,6 +54,7 @@ public class BoardControllerTest {
         board.setBoardCreateId("100");
         //when
         Board savedBoard = boardRepository.save(board);
+        em.flush();
         //then
         assertEquals("100", savedBoard.getBoardId());
         assertEquals("100", savedBoard.getBoardTitle());
