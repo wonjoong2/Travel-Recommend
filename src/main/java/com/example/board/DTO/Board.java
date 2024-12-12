@@ -1,20 +1,22 @@
 package com.example.board.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "travel_board") // 데이터베이스 테이블 이름
+@Table(name = "travel_board")
 public class Board {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // PK 자동 증가
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "board_seq")
 	private int boardSeq;
 
-	@Column(name = "board_id", nullable = false) // 컬럼 매핑
+	@Column(name = "board_id", nullable = false)
 	private String boardId;
 
 	@Column(name = "board_title", nullable = false)
@@ -38,6 +40,13 @@ public class Board {
 	@Column(name = "board_update_id")
 	private String boardUpdateId;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "board_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+	private User user;
+
+	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	private List<Comment> comments;
 
 	// Getters and Setters
 	public int getBoardSeq() {
@@ -46,14 +55,6 @@ public class Board {
 
 	public void setBoardSeq(int boardSeq) {
 		this.boardSeq = boardSeq;
-	}
-
-	public String getBoardCreateId() {
-		return boardCreateId;
-	}
-
-	public void setBoardCreateId(String boardCreateId) {
-		this.boardCreateId = boardCreateId;
 	}
 
 	public String getBoardId() {
@@ -103,6 +104,15 @@ public class Board {
 	public void setBoardUpdateDt(LocalDateTime boardUpdateDt) {
 		this.boardUpdateDt = boardUpdateDt;
 	}
+
+	public String getBoardCreateId() {
+		return boardCreateId;
+	}
+
+	public void setBoardCreateId(String boardCreateId) {
+		this.boardCreateId = boardCreateId;
+	}
+
 	public String getBoardUpdateId() {
 		return boardUpdateId;
 	}
@@ -110,6 +120,23 @@ public class Board {
 	public void setBoardUpdateId(String boardUpdateId) {
 		this.boardUpdateId = boardUpdateId;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public String toString() {
 		return "Board{" +
@@ -122,6 +149,8 @@ public class Board {
 				", boardUpdateDt=" + boardUpdateDt +
 				", boardCreateId='" + boardCreateId + '\'' +
 				", boardUpdateId='" + boardUpdateId + '\'' +
+				", user=" + (user != null ? user.toString() : "null") +
+				", comments=" + (comments != null ? comments.size() : 0) +
 				'}';
 	}
 }

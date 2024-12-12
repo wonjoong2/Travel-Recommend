@@ -46,7 +46,7 @@
                         <td>
                             <input type="checkbox" class="row-checkbox" th:value="${board.boardSeq}">
                         </td>
-                        <td></td>
+                        <td th:text="${board.user.userNickname}"></td>
                         <td style="text-decoration-line: underline; cursor:pointer;" th:text="${board.boardTitle}" th:onclick="'detailBtn(' + ${board.boardSeq} + ')'"></td>
                         <td th:text="${board.boardCreateDt}"></td>
                         <td th:text="${board.boardCnt}"></td>

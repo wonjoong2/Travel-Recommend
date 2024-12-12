@@ -10,9 +10,7 @@ import java.util.Map;
 
 public interface BoardRepository extends JpaRepository<Board, Integer> {
 
-    @Query(value = "SELECT TB.*,TU.*" +
-            "FROM TRAVEL_BOARD TB " +
-            "LEFT JOIN TRAVEL_USER TU ON TB.BOARD_ID = TU.USER_ID", nativeQuery = true)
+    @Query("SELECT b FROM Board b LEFT JOIN FETCH b.user")
     List<Board> BoardList();
 
     @Query(value = "SELECT * FROM travel_board WHERE board_seq = :boardSeq", nativeQuery = true)

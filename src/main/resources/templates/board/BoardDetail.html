@@ -10,6 +10,64 @@
   $(document).ready(function() {
     // 페이지 로드 시 saveDiv 숨기기
     $('#saveDiv').hide();
+
+    var params= {
+      boardSeq :$('#boardSeq').val(),
+    }
+    // 댓글 목록 가져오기
+    function loadComments() {
+      $.ajax({
+        url: '/comment/list',
+        type: 'get',
+        data: params,
+        success: function (data) {
+          console.log(data)
+          console.log(data)
+          const commentsList = $('#commentsList');
+          commentsList.empty();
+
+          data.forEach(comment => {
+            commentsList.append(`
+              <div class="comment">
+                <strong>${comment.userId}</strong>: ${comment.commentContent}
+                <div><small>${comment.createDt}</small></div>
+              </div>
+            `);
+          });
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      });
+    }
+    // 댓글 추가
+    $('#addCommentBtn').click(function () {
+      const commentContent = $('#commentContent').val();
+      if (!commentContent.trim()) {
+        alert('댓글 내용을 입력하세요.');
+        return;
+      }
+      var params={
+        commentContent :  $('#commentContent').val(),
+        userId : $('#id').val(),
+        boardSeq : $('#boardSeq').val(),
+      }
+      if(confirm('저장하시겠습니까?')){
+        $.ajax({
+          url: '/comment/add',
+          type: 'post',
+          data: params,
+          success: function (data) {
+            $('#commentContent').val('');
+            loadComments();
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+    loadComments();
   });
   function modifyBtn(){
     var params={
@@ -95,6 +153,19 @@
           <textarea cols="40" rows="10" class="form-control" id="content"
                     name="content" th:text="${BoardDetail[0].boardContent}" readonly></textarea>
         </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <h3>댓글</h3>
+      <div id="commentsList" class="">
+
+      </div>
+
+      <div class="add-comment">
+        <textarea id="commentContent" class="form-control" placeholder="댓글을 입력하세요" rows="3"></textarea>
+        <br/>
+        <button id="addCommentBtn" class="btn btn-secondary py-3 px-5 w-15">댓글 추가</button>
       </div>
     </div>
 

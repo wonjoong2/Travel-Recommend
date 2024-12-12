@@ -152,9 +152,6 @@ public class UserController {
             throw new Exception("비밀번호를 확인해주세요");
         }
         String userId = (String) params.get("userId");
-        // Spring Security 인증 컨텍스트에 사용자 추가
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, List.of());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         session.setAttribute("userId", userId);
 
         return "/board/BoardList";

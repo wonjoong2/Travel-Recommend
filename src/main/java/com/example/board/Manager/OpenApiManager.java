@@ -64,6 +64,7 @@ public class OpenApiManager {
         HttpEntity<?> entity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<Map> resultMap = restTemplate.exchange(makeUrl1(areaCode,sigunCode,pageNo), HttpMethod.GET, entity, Map.class);
         log.info("resultMap : " ,resultMap.getBody());
+        System.out.println(resultMap);
         return resultMap;
 
     }

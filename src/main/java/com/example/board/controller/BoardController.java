@@ -35,9 +35,8 @@ public class BoardController {
     @RequestMapping("/board/BoardList")
     public String BoardList(Model model,HttpSession session){
         List<Board> boardList = boardService.BoardList();
-        String userId = (String) session.getAttribute("userId");
-        System.out.println("=================");
-        System.out.println(userId);
+        System.out.println("================boardList");
+        System.out.println(boardList);
         model.addAttribute("BoardList", boardList);
 
         return "/board/BoardList";
@@ -94,6 +93,7 @@ public class BoardController {
     public String BoardDetail(@RequestParam Map<String, Object> params , Model model) {
 
         List<Board> boardDetail = boardService.BoardDetail(params);
+
         model.addAttribute("BoardDetail", boardDetail);
 
         return "/board/BoardDetail";
