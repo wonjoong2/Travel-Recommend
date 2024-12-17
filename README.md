@@ -4,8 +4,8 @@
 * 구성 : 1인 개발
 * 일정 : 2024.11.25 ~ 2023.12.11 (2주) 
 * 개발 언어 : `Java`
-* 개발 환경 : `Apache Tomcat`, `AWS`, `Windows 10`, `DBeaver`, `Git/Github`, `JPA`, `Mybatis`
-* API: `빠른 로그인(Google)`, `이메일 인증`, `다음 우편번호 서비스`
+* 개발 환경 : `Spring Boot`, `Apache Tomcat`, `Windows 10`, `DBeaver`, `Git/Github`, `JPA`, `Mybatis`
+* API: `빠른 로그인(Google)`, `이메일 인증`, `다음 우편번호 서비스`, `Tour API`, `Google Map API`, `Geocoding API`
 * 데이터베이스 : `MariaDB`
 * 형상관리 : `Github`
 + 간단소개
@@ -35,19 +35,30 @@
 
 ## 3.DB 설계
 ***
-
+![erd](https://github.com/user-attachments/assets/4803bd68-760d-4914-8dbe-d8bf6be1b1b1)
 ## 4.API 설계
 ***
 ### 회원 관련 API
 | 기능 | Method | Url | Return |
 | --- | --- | --- | --- |
-| 행1 열1 | 행1 열2 | 행1 열3 |
-| 행2 열1 | 행2 열2 | 행2 열3 |
-| 행3 열1 | 행3 열2 | 행3 열3 |
+| 사용자 등록 페이지 이동 | /UserRegister | `GET` | 사용자 등록 페이지 |
+| 로그인 요청 처리 | /login | `POST` | /BoardList |
+| 로그아웃 요청 처리 | /logout | `POST` | 인덱스 페이지로 이동 |
+| ID / PW 찾기 페이지 이동 | /UserFindIdPw | `GET` |  ID / PW 찾기 페이지 |
+| 비밀번호 변경 요청 처리 | /userUpdatePw | `POST` |  비밀번호 변경 요청 처리 |
+
 
 ### 마이페이지 관련 API
 | 기능 | Method | Url | Return |
 | --- | --- | --- | --- |
-| 행1 열1 | 행1 열2 | 행1 열3 |
-| 행2 열1 | 행2 열2 | 행2 열3 |
-| 행3 열1 | 행3 열2 | 행3 열3 |
+|  마이페이지 이동 | /myPagePop | `GET` | 마이페이지 |
+| 내 여행 목록 페이지 이동 | /myTravelPop | `GET` | 내 여행 목록 페이지 |
+| 내 여행목록 GoogleMap 페이지 이동 | /myGoogleMapPop | `GET` | 내 여행목록 GoogleMap 페이지 |
+
+### 여행 관련 API
+| 기능 | Method | Url | Return |
+| --- | --- | --- | --- |
+| Travel Course 페이지 이동 | /TravelList | `GET` | Travel Course 페이지 |
+| 지역, 시군구 별 여행 api 요청 처리 | /api/travel-api1 | `POST` | 지역, 시군구 별 여행 api 요청 처리 |
+| 여행 상세 api 요청 처리 | /api/travel-api2 | `POST` | 여행 상세 api 요청 처리 |
+| 시군구 코드 찾기 api 요청 처리 | /api/travel-api3 | `POST` | 시군구 코드 찾기 api 요청 처리 |
